@@ -18,7 +18,6 @@ public class GFG_DP {
 		// 2 }, 9, 5));
 		// System.out.println(subSetTargetTabulated(new int[] { 3, 34, 4, 12, 5,
 		// 2 }, 10));
-		choiceOfArea(20, 8, 3, 2, -5, -10, -20, 5, " ");
 	}
 
 	// EASY
