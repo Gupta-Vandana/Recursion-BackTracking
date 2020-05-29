@@ -12,8 +12,9 @@ public class Step_One {
 	public static void main(String[] args) {
 		// Combinations(new int[] { 1, 2, 3, 4 }, 2, " ", -1);
 		// digitBinary(4, "");
-		//DigitGivenNumbers(3, 6, 0, "");
-		// f(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 6, 0, 0, "");
+		// DigitGivenNumbers(3, 6, 0, "");
+		 f(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 6, 0, 0, "");
+		//stringPartitioning("abcde");
 	}
 
 	// YAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY!!!!!!!!!!!!!!!!!!!
@@ -51,6 +52,19 @@ public class Step_One {
 		}
 		subString(s.substring(1), "");
 	}
+
+	// partitioning of string
+	private static void stringPartitioning(String s) {
+		if (s.length() == 0) {
+			System.out.println();
+		}
+		int si = 1;
+		while (si < s.length()) {
+			System.out.println(s.substring(0, si) + "|" + s.substring(si, s.length()));
+			si++;
+		}
+	}
+
 	// Print all possible strings of length k formed from a set of n characters
 	public static void possibleStringOfLengthK(char[] arr, int k, String asf) {
 		if (k + 1 == asf.length()) {
@@ -62,6 +76,7 @@ public class Step_One {
 
 		}
 	}
+
 	// print all the combinations equal to target of any length
 	public static void f(int[] arr, int target, int vidx, int ssf, String sssf) {
 		if (vidx == arr.length) {

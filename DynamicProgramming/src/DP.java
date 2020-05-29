@@ -29,14 +29,15 @@ public class DP {
 		// System.out.println(coinChangePermuatations(new int[] { 2, 3, 5, 6 },
 		// 10));
 		// coinChangePermutationsRecursion(new int[] { 2, 3, 5, 6 }, 10, "", 0);
-		// coinChangeCombinationsRecursion(new int[] { 2, 3, 5, 6 }, 10, "", 0,
-		// 0);
+		coinChangeCombinationsRecursion(new int[] { 2, 3, 5, 6 }, 7, "", 0, 0);
 		// int[][] matrix = { { 1, 0, 1, 0, 0, 1 }, { 1, 0, 1, 1, 1, 1 }, { 1,
 		// 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 0, 0 },
 		// { 1, 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 1, 0 } };
 		// System.out.println(maxSizeSquareSubMatrixTabulated(matrix));
 		// LIS_Tabulated(new int[] { 10, 22, 9, 33, 21, 50, 41, 60, 80, 1 });
-		LBS_Tabulated(new int[] { 10, 22, 9, 33, 21, 50, 41, 60, 80, 1 });
+		// LBS_Tabulated(new int[] { 10, 22, 9, 33, 21, 50, 41, 60, 80, 1 });
+		// System.out.println(matrixChainMultiplication(new int[] { 10, 20, 30,
+		// 40, 50, 60 }));
 	}
 
 	// Fibonacci TABULATED
@@ -329,5 +330,40 @@ public class DP {
 		System.out.println(path);
 		System.out.println(Arrays.toString(lds));
 		System.out.println(Arrays.toString(plds));
+	}
+
+	// matrix chain multiplication TABULATED
+	private static int matrixChainMultiplication(int dims[]) {
+		int[][] mcm = new int[dims.length][dims.length];
+
+		for (int gap = 1; gap < dims.length; gap++) {
+			int i = 0;
+			int j = gap + i;
+			while (j < dims.length) {
+				if (gap == 1) {
+					mcm[i][j] = 0;
+				} else {
+					int min = Integer.MAX_VALUE;
+
+					for (int cp = i + 1; cp <= j - 1; cp++) {
+						int fp = mcm[i][cp];
+						int sp = mcm[cp][j];
+						int factor = dims[i] * dims[cp] * dims[j];
+
+						int totalCost = fp + sp + factor;
+						min = Math.min(min, totalCost);
+
+						mcm[i][j] = min;
+					}
+				}
+				i++;
+				j++;
+			}
+
+		}
+		for (int i = 0; i < mcm.length; i++) {
+			System.out.println(Arrays.toString(mcm[i]));
+		}
+		return mcm[0][mcm.length - 1];
 	}
 }
