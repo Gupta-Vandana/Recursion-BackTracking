@@ -13,15 +13,16 @@ public class Step_One {
 		// Combinations(new int[] { 1, 2, 3, 4 }, 2, " ", -1);
 		// digitBinary(4, "");
 		// DigitGivenNumbers(3, 6, 0, "");
-		 f(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 6, 0, 0, "");
-		//stringPartitioning("abcde");
+		// f(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 6, 0, 0, "");
+		// stringPartitioning("abcde");
+		subsequences("abcd", "");
 	}
 
 	// YAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY!!!!!!!!!!!!!!!!!!!
 	// I DID IT!!!!!
 	public static void subsequencesWithASCII(String s, String sf) {
 		if (s.length() == 0) {
-			System.out.println(sf);
+			System.out.println(count++ + ". " + sf);
 			return;
 		}
 
@@ -34,7 +35,7 @@ public class Step_One {
 	// I DID IT!!!!!
 	public static void subsequences(String s, String sf) {
 		if (s.length() == 0) {
-			System.out.println(sf);
+			System.out.println(count++ + ". " + sf);
 			return;
 		}
 

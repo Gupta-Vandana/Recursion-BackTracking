@@ -18,6 +18,18 @@ public class GFG_DP {
 		// 2 }, 9, 5));
 		// System.out.println(subSetTargetTabulated(new int[] { 3, 34, 4, 12, 5,
 		// 2 }, 10));
+		// System.out.println(newmanWilliamsRecursive(7));
+		// System.out.println(newmanWilliamstabulated(7));
+		// for (int i = 0; i < 10; i++) {
+		// for (int j = 0; j < 3; j++) {
+		// System.out.print(nCrPRecursive(i, j, 13));
+		// System.out.print(",");
+		// }
+		// System.out.println();
+		// }
+		// System.out.println(nCrPTabulated(10, 2, 13));
+		// System.out.println(" ".length());
+		System.out.println(longestCommonSubsequenceRecursive("AGGTAB","GXTXAYB"));
 	}
 
 	// EASY
@@ -186,15 +198,96 @@ public class GFG_DP {
 		if (r == n || r == 0) {
 			return 1;
 		}
+		if (n < r) {
+			return 0;
+		}
 		return (nCrPRecursive(n - 1, r - 1, p) % p + nCrPRecursive(n - 1, r, p) % p) % p;
 	}
 
 	// 16.Compute nCr % p tabulated
-	private static void nCrPTabulated() {
+	private static int nCrPTabulated(int n, int r, int p) {
+		int[][] result = new int[n + 1][r + 1];
+		for (int i = 0; i < result.length; i++) {
+			for (int j = 0; j < result[0].length; j++) {
+				if (i == j || j == 0) {
+					result[i][j] = 1;
+				} else if (i < j) {
+					result[i][j] = 0;
+				} else {
+					result[i][j] = (result[i - 1][j - 1] % p + result[i - 1][j] % p) % p;
+				}
+			}
+		}
+		for (int i = 0; i < result.length; i++) {
+			System.out.println(Arrays.toString(result[i]));
+		}
+		return result[n][r];
 
 	}
 
 	// 17.Choice of Area
+	// 21.Newman–Shanks–Williams prime recursive
+	private static int newmanWilliamsRecursive(int n) {
+		if (n == 1 || n == 0) {
+			return 1;
+		}
+		return 2 * newmanWilliamsRecursive(n - 1) + newmanWilliamsRecursive(n - 2);
+	}
+
+	// 21.Newman–Shanks–Williams prime tabulated
+	private static int newmanWilliamstabulated(int n) {
+		int[] result = new int[n + 1];
+		result[0] = 1;
+		result[1] = 1;
+		for (int i = 2; i < result.length; i++) {
+			result[i] = 2 * result[i - 1] + result[i - 2];
+		}
+		System.out.println(Arrays.toString(result));
+		return result[result.length - 1];
+	}
+
+	// 22.Assembly Line Scheduling recursive
+	// 22.Assembly Line Scheduling tabulated
+	// 23.
+	// 24.
+	// 25.Newman-Conway Sequence recursive
+	private static int NewmanConwayRecursive(int n) {
+		if (n == 1 || n == 2) {
+			return 1;
+		}
+		return NewmanConwayRecursive(NewmanConwayRecursive(n - 1))
+				+ NewmanConwayRecursive(n - NewmanConwayRecursive(n - 1));
+	}
+
+	// 25.Newman-Conway Sequence recursive
+	private static int NewmanConwayTabulated(int n) {
+		int result[] = new int[n + 1];
+		result[0] = 0;
+		result[1] = 1;
+		result[2] = 1;
+		for (int i = 3; i < result.length; i++) {
+			result[i] = result[result[i - 1]] + result[i - result[i - 1]];
+		}
+		return result[n];
+	}
+
+	// 32.Longest common subsequence recursion
+	private static int longestCommonSubsequenceRecursive(String a, String b) {
+		if (a.length() == 0 || b.length() == 0) {
+			return 0;
+		}
+		int i = 0;
+		if (a.charAt(i) == b.charAt(i)) {
+			return 1 + longestCommonSubsequenceRecursive(a.substring(1), b.substring(1));
+		} else {
+			return Math.max(longestCommonSubsequenceRecursive(a.substring(1), b),
+					longestCommonSubsequenceRecursive(a, b.substring(1)));
+		}
+	}
+	// 32.Longest common subsequence tabulated
+	private void longestCommonSubsequenceTabulated(String a, String b) {
+          
+	}
 
 	// INTERMEDIATE
 	// 10. 0/1 knapsack problem recursive
