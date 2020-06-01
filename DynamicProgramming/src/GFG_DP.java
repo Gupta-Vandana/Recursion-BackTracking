@@ -29,7 +29,19 @@ public class GFG_DP {
 		// }
 		// System.out.println(nCrPTabulated(10, 2, 13));
 		// System.out.println(" ".length());
-		System.out.println(longestCommonSubsequenceRecursive("AGGTAB","GXTXAYB"));
+		// System.out.println(longestCommonSubsequenceRecursive("AGGTAB",
+		// "GXTXAYB"));
+		// maxSumIncreasingSubsequence(new int[] { 10, 4, 5, 3 });
+		// maxProductIncreasing(new int[] { 10, 22, 9, 33, 21, 50, 41, 60 });
+		// System.out.println(subsequencesProductLessThanK(new int[] { 1, 2, 3,
+		// 4 }, 10, 0, 1));
+		// System.out.println(Math.max(maxSumWithNoTwoAdjacent(new int[] { 5, 6,
+		// 10, 100, 10, 6 }, 0, "", 0),
+		// maxSumWithNoTwoAdjacent(new int[] { 5, 6, 10, 100, 10, 6 }, 1, "",
+		// 0)));
+		// System.out.println(maxSumWithNoTwoAdjacentTabulated(new int[] { 5, 6,
+		// 10, 100, 10, 6 }));
+		System.out.println(longestSubAdjDiffOne(new int[] { 1, 2, 3, 2, 3, 7, 2, 1 }));
 	}
 
 	// EASY
@@ -137,7 +149,7 @@ public class GFG_DP {
 		return matrix[n][k];
 	}
 
-	// 7.Tiling Problem (floor size n x m,tile size 1 x m)
+	// 7.Tiling Problem (floor size n x m,tile size 1 x m) recursive
 	private static void tilingProblemRecursive(int n, int m, String asf) {
 		if (n == 0) {
 			System.out.println(asf);
@@ -259,7 +271,7 @@ public class GFG_DP {
 				+ NewmanConwayRecursive(n - NewmanConwayRecursive(n - 1));
 	}
 
-	// 25.Newman-Conway Sequence recursive
+	// 25.Newman-Conway Sequence tabulated
 	private static int NewmanConwayTabulated(int n) {
 		int result[] = new int[n + 1];
 		result[0] = 0;
@@ -284,9 +296,162 @@ public class GFG_DP {
 					longestCommonSubsequenceRecursive(a, b.substring(1)));
 		}
 	}
+
 	// 32.Longest common subsequence tabulated
 	private void longestCommonSubsequenceTabulated(String a, String b) {
-          
+
+	}
+
+	// 38.Maximum Sum Increasing Subsequence recursive
+	// 38.Maximum Sum Increasing Subsequence tabulated
+	private static void maxSumIncreasingSubsequence(int[] arr) {
+		int[] mssf = new int[arr.length];
+		String[] paths = new String[arr.length];
+		mssf[0] = arr[0];
+		paths[0] = arr[0] + " ";
+		int max = arr[0];
+		for (int i = 1; i < paths.length; i++) {
+			for (int j = 0; j <= i - 1; j++) {
+				if (arr[j] < arr[i]) {
+					if (mssf[j] > mssf[i]) {
+						mssf[i] = mssf[j];
+						paths[i] = paths[j];
+					}
+				}
+			}
+			mssf[i] = mssf[i] + arr[i];
+			paths[i] = paths[i] + arr[i] + " ";
+			max = Math.max(max, mssf[i]);
+		}
+		System.out.println(Arrays.toString(mssf));
+		System.out.println(Arrays.toString(paths));
+		System.out.println(max);
+
+	}
+
+	// 39.Maximum product of an increasing subsequence recursive
+	// 39.Maximum product of an increasing subsequence tabulated
+	private static void maxProductIncreasing(int[] arr) {
+		int[] mpsf = new int[arr.length];
+		String[] paths = new String[arr.length];
+		mpsf[0] = arr[0];
+		paths[0] = arr[0] + " ";
+		for (int i = 1; i < paths.length; i++) {
+			for (int j = 0; j < i; j++) {
+				if (arr[j] < arr[i]) {
+					if (mpsf[j] > mpsf[i]) {
+						mpsf[i] = mpsf[j];
+						paths[i] = paths[j];
+					}
+				}
+			}
+			mpsf[i] = mpsf[i] * arr[i];
+			paths[i] = paths[i] + arr[i] + " ";
+		}
+		System.out.println(Arrays.toString(mpsf));
+		System.out.println(Arrays.toString(paths));
+
+	}
+
+	static int count = 0;
+
+	// 40.Count all subsequences having product less than K recursive
+	private static int subsequencesProductLessThanK(int[] arr, int k, int vidx, int sum) {
+		// if (vidx == arr.length) {
+		// if (sum < k) {
+		// count++;
+		// System.out.println(count + ". " + asf);
+		// return;
+		// } else {
+		// return;
+		// }
+		// }
+		// subsequencesProductLessThanK(arr, k, vidx + 1, sum, asf);
+		// subsequencesProductLessThanK(arr, k, vidx + 1, sum * arr[vidx], asf +
+		// arr[vidx] + " ");
+		if (vidx == arr.length) {
+			if (sum < k)
+				return 1;
+			if (sum >= k)
+				return 0;
+		}
+
+		return subsequencesProductLessThanK(arr, k, vidx + 1, sum)
+				+ subsequencesProductLessThanK(arr, k, vidx + 1, sum * arr[vidx]);
+
+	}
+
+	// Maximum sum such that no two elements are adjacent recursive
+	private static int maxSumWithNoTwoAdjacent(int[] arr, int vidx, String asf, int sum) {
+		if (vidx >= arr.length) {
+			System.out.println(asf);
+			return sum;
+		}
+		return Math.max(maxSumWithNoTwoAdjacent(arr, vidx + 2, asf + arr[vidx] + " ", sum + arr[vidx]),
+				maxSumWithNoTwoAdjacent(arr, vidx + 2, asf, sum));
+	}
+
+	// Maximum sum such that no two elements are adjacent tabulated
+	private static int maxSumWithNoTwoAdjacentTabulated(int[] arr) {
+		int[] zero = new int[arr.length];
+		zero[0] = arr[0];
+
+		int[] one = new int[arr.length];
+		one[1] = arr[1];
+
+		for (int i = 2; i < zero.length; i = i + 2) {
+			zero[i] = Math.max(zero[i - 2], zero[i - 2] + arr[i]);
+		}
+		for (int i = 3; i < one.length; i = i + 2) {
+			one[i] = Math.max(one[i - 2], one[i - 2] + arr[i]);
+		}
+		System.out.println(Arrays.toString(zero));
+		System.out.println(Arrays.toString(one));
+		int max = 0;
+		for (int i = 0; i < one.length; i++) {
+			max = Math.max(zero[i], one[i]);
+		}
+		return max;
+	}
+
+	public static void subsequencesProductLessThanKTabulated(int[] arr, int k) {
+		int[][] result = new int[arr.length][k];
+
+	}
+
+	// dyn (I k)
+	// if I == N: return 1
+	// if k >= K: return 0
+	// return dyn(I+1,k)+dyn(I+1,k*A[I])
+	// 42.Longest subsequence such that difference between adjacents is one
+	private static int longestSubAdjDiffOne(int[] arr) {
+		int[] lengths = new int[arr.length];
+		lengths[0] = 1;
+		String[] paths = new String[arr.length];
+		Arrays.fill(paths, "");
+		paths[0] = arr[0] + "";
+		int max = 0;
+		String path = "";
+		for (int i = 1; i < paths.length; i++) {
+			for (int j = 0; j < i; j++) {
+				if (Math.abs(arr[j] - arr[i]) == 1) {
+					if (lengths[j] > lengths[i]) {
+						lengths[i] = lengths[j];
+						paths[i] = paths[j];
+					}
+				}
+			}
+			lengths[i] += 1;
+			paths[i] = paths[i] + " " + arr[i];
+			if (max < lengths[i]) {
+				max = lengths[i];
+				path = paths[i];
+
+			}
+		}
+		System.out.println(Arrays.toString(lengths));
+		System.out.println(Arrays.toString(paths));
+		return max;
 	}
 
 	// INTERMEDIATE

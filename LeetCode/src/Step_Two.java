@@ -50,7 +50,7 @@ public class Step_Two {
 		// -1);
 		// Arrays.toString(result.toArray());
 		// System.out.println(max);
-		// subsequencesOfArray(new int[] { 1, 2, 3 }, 0, " ");
+		subsequencesOfArray(new int[] { 1, 2, 3, 4 }, 0, " ");
 		// kpc("263", "");
 		// BoardPath(10, "", 0);
 		// MazePath(new int[3][3], 2, 2, "_");
