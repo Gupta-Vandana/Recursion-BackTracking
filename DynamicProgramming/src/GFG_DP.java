@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class GFG_DP {
 
 	public static void main(String[] args) {
-		// System.out.println(catalanNumberRecursive(8));
+		// System.out.println(catalanNumberRecursive(4));
 		// System.out.println(catalanNumberTabulization(8));
 		// System.out.println(stirlingNumber(3, 2));
 		// System.out.println(binomialCoefficientRecursive(0, 3));
@@ -41,8 +41,22 @@ public class GFG_DP {
 		// 0)));
 		// System.out.println(maxSumWithNoTwoAdjacentTabulated(new int[] { 5, 6,
 		// 10, 100, 10, 6 }));
-		System.out.println(longestSubAdjDiffOne(new int[] { 1, 2, 3, 2, 3, 7, 2, 1 }));
+		// System.out.println(longestSubAdjDiffOne(new int[] { 1, 2, 3, 2, 3, 7,
+		// 2, 1 }));
+		// for (int i = 0; i <= 5; i++) {
+		// System.out.println(diffWaysToSumN(i, 0, ""));
+		// System.out.println("````");
+		// }
+
+		// diffWaysToSumNTabulated(5);
+		// System.out.println(diffWaysToExpressN(3, ""));
+		// System.out.println(diffWaysToExpressNTabulated(10));
+		System.out.println(waysToSumNArrElements(14, new int[] { 12, 3, 1, 9 }, ""));
+		waysToSumNArrElementsTabulated(14, new int[] { 12, 3, 1, 9 });
 	}
+
+	static int count = 0;
+	static int max = 0;
 
 	// EASY
 	// 1.ugly numbers
@@ -194,13 +208,6 @@ public class GFG_DP {
 	}
 
 	// 11.Subset Sum Problem tabulated
-	// WRONG
-	private static boolean subSetTargetTabulated(int[] arr, int target) {
-		boolean[][] matrix = new boolean[arr.length + 1][target + 1];
-
-		return matrix[arr.length][target];
-	}
-
 	// 12.
 	// 13.
 	// 14.
@@ -258,8 +265,7 @@ public class GFG_DP {
 		return result[result.length - 1];
 	}
 
-	// 22.Assembly Line Scheduling recursive
-	// 22.Assembly Line Scheduling tabulated
+	// 22.
 	// 23.
 	// 24.
 	// 25.Newman-Conway Sequence recursive
@@ -298,10 +304,6 @@ public class GFG_DP {
 	}
 
 	// 32.Longest common subsequence tabulated
-	private void longestCommonSubsequenceTabulated(String a, String b) {
-
-	}
-
 	// 38.Maximum Sum Increasing Subsequence recursive
 	// 38.Maximum Sum Increasing Subsequence tabulated
 	private static void maxSumIncreasingSubsequence(int[] arr) {
@@ -352,8 +354,6 @@ public class GFG_DP {
 		System.out.println(Arrays.toString(paths));
 
 	}
-
-	static int count = 0;
 
 	// 40.Count all subsequences having product less than K recursive
 	private static int subsequencesProductLessThanK(int[] arr, int k, int vidx, int sum) {
@@ -414,11 +414,6 @@ public class GFG_DP {
 		return max;
 	}
 
-	public static void subsequencesProductLessThanKTabulated(int[] arr, int k) {
-		int[][] result = new int[arr.length][k];
-
-	}
-
 	// dyn (I k)
 	// if I == N: return 1
 	// if k >= K: return 0
@@ -454,9 +449,99 @@ public class GFG_DP {
 		return max;
 	}
 
+	// 66.Minimum number of jumps to reach end
+	// 82.Count of different ways to express N as the sum of 1, 3 and 4
+	// recursive
+	private static int diffWaysToExpressN(int n, String asf) {
+		if (n == 0) {
+			System.out.println(asf);
+			return 1;
+		}
+		if (n < 0) {
+			return 0;
+		}
+		return diffWaysToExpressN(n - 1, asf + 1 + " ") + diffWaysToExpressN(n - 3, asf + 3 + " ")
+				+ diffWaysToExpressN(n - 4, asf + 4 + " ");
+
+	}
+
+	// 82.Count of different ways to express N as the sum of 1, 3 and 4
+	// tabulated
+	private static int diffWaysToExpressNTabulated(int n) {
+		int[] res = new int[n + 1];
+		res[0] = 1;
+		res[1] = 1;
+		res[2] = 1;
+		res[3] = 2;
+		for (int i = 4; i < res.length; i++) {
+			res[i] = res[i - 1] + res[i - 3] + res[i - 4];
+		}
+		System.out.println(Arrays.toString(res));
+		return res[n];
+	}
+
+	// 99.Ways to sum to N using array elements with repetition allowed
+	// recursive
+	private static int waysToSumNArrElements(int n, int[] arr, String asf) {
+		int res = 0;
+		if (n == 0) {
+			System.out.println(asf);
+			return 1;
+		}
+		if (n < 0) {
+			return 0;
+		}
+		for (int i = 0; i < arr.length; i++) {
+			res = res + waysToSumNArrElements(n - arr[i], arr, asf + arr[i] + " ");
+		}
+		return res;
+	}
+
+	// 99.Ways to sum to N using array elements with repetition allowed
+	// tabulated
+	private static void waysToSumNArrElementsTabulated(int n, int[] arr) {
+		int res[] = new int[n + 1];
+		res[0] = 1;
+		for (int i = 1; i < res.length; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				if (i >= arr[j]) {
+					res[i] = res[i] + res[i - arr[j]];
+				}
+			}
+		}
+		System.out.println(Arrays.toString(res));
+	}
+
+	// 106.Different ways to sum n using numbers greater than or equal to m
+	// recursive
+	private static int diffWaysToSumN(int n, int li, String asf) {
+		int res = 0;
+		if (n == 0) {
+			System.out.println(asf);
+			return 1;
+		}
+		if (n < 0) {
+			return 0;
+		}
+		for (int i = li; i <= n; i++) {
+			res = res + diffWaysToSumN(n - i, i, asf + i + " ");
+		}
+		return res;
+	}
+
+	// 106.Different ways to sum n using numbers greater than or equal to m
+	// tabulated
+	private static void diffWaysToSumNTabulated(int n) {
+		int[] res = new int[n + 1];
+		res[0] = 1;
+		for (int i = 1; i < res.length; i++) {
+
+		}
+		System.out.println(Arrays.toString(res));
+	}
+
 	// INTERMEDIATE
 	// 10. 0/1 knapsack problem recursive
-	static int max = 0;
 
 	private static void zero_oneKnapsackRecursive(int W, int[] weights, int[] profits, int w, int profit, String asf,
 			int vidx) {
