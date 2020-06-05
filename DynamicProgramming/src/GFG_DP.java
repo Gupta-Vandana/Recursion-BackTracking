@@ -53,8 +53,8 @@ public class GFG_DP {
 		// f(6, "");
 		// diffWaysToSumN(6, 1, "");
 		// fTabulated(6);
-		System.out.println(strensDiatomicSeries(15));
-		strensDiatomicSeriesTabulated(15);
+		// System.out.println(strensDiatomicSeries(15));
+		// strensDiatomicSeriesTabulated(15);
 	}
 
 	static int count = 0;
