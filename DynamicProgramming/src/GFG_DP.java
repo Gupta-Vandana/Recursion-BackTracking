@@ -43,16 +43,18 @@ public class GFG_DP {
 		// 10, 100, 10, 6 }));
 		// System.out.println(longestSubAdjDiffOne(new int[] { 1, 2, 3, 2, 3, 7,
 		// 2, 1 }));
-		// for (int i = 0; i <= 5; i++) {
-		// System.out.println(diffWaysToSumN(i, 0, ""));
-		// System.out.println("````");
-		// }
-
+		// System.out.println(diffWaysToSumN(10, 5, ""));
 		// diffWaysToSumNTabulated(5);
 		// System.out.println(diffWaysToExpressN(3, ""));
 		// System.out.println(diffWaysToExpressNTabulated(10));
-		System.out.println(waysToSumNArrElements(14, new int[] { 12, 3, 1, 9 }, ""));
-		waysToSumNArrElementsTabulated(14, new int[] { 12, 3, 1, 9 });
+		// System.out.println(waysToSumNArrElements(14, new int[] { 12, 3, 1, 9
+		// }, ""));
+		// waysToSumNArrElementsTabulated(14, new int[] { 12, 3, 1, 9 });
+		// f(6, "");
+		// diffWaysToSumN(6, 1, "");
+		// fTabulated(6);
+		System.out.println(strensDiatomicSeries(15));
+		strensDiatomicSeriesTabulated(15);
 	}
 
 	static int count = 0;
@@ -450,6 +452,33 @@ public class GFG_DP {
 	}
 
 	// 66.Minimum number of jumps to reach end
+	// 77.Find n-th element from Stern’s Diatomic Series recursive
+	private static int strensDiatomicSeries(int n) {
+		if (n == 0 || n == 1) {
+			return n;
+		}
+		if (n % 2 == 0) {
+			return strensDiatomicSeries(n / 2);
+		} else {
+			return strensDiatomicSeries((n - 1) / 2) + strensDiatomicSeries((n + 1) / 2);
+		}
+	}
+
+	private static void strensDiatomicSeriesTabulated(int n) {
+		int[] res = new int[n + 1];
+		res[0] = 0;
+		res[1] = 1;
+		for (int i = 2; i < res.length; i++) {
+			if (i % 2 == 0) {
+				res[i] = res[i / 2];
+			} else {
+				res[i] = res[(i - 1) / 2] + res[(i + 1) / 2];
+			}
+		}
+		System.out.println(Arrays.toString(res));
+
+	}
+
 	// 82.Count of different ways to express N as the sum of 1, 3 and 4
 	// recursive
 	private static int diffWaysToExpressN(int n, String asf) {
@@ -512,9 +541,37 @@ public class GFG_DP {
 		System.out.println(Arrays.toString(res));
 	}
 
+	private static int f(int n, String asf) {
+		int res = 0;
+		if (n == 0) {
+			count++;
+			System.out.println(count + ". " + asf);
+			return 1;
+		}
+		if (n < 0) {
+			return 0;
+		}
+		for (int i = 1; i <= n; i++) {
+			res = res + f(n - i, asf + i + " ");
+		}
+		return res;
+	}
+
+	private static void fTabulated(int n) {
+		int[] res = new int[n + 1];
+		res[0] = 1;
+		for (int i = 1; i < res.length; i++) {
+			for (int j = 0; j <= i; j++) {
+				if (i >= j)
+					res[i] = res[i] + res[i - j];
+			}
+		}
+		System.out.println(Arrays.toString(res));
+	}
+
 	// 106.Different ways to sum n using numbers greater than or equal to m
 	// recursive
-	private static int diffWaysToSumN(int n, int li, String asf) {
+	private static int diffWaysToSumN(int n, int m, String asf) {
 		int res = 0;
 		if (n == 0) {
 			System.out.println(asf);
@@ -523,7 +580,7 @@ public class GFG_DP {
 		if (n < 0) {
 			return 0;
 		}
-		for (int i = li; i <= n; i++) {
+		for (int i = m; i <= n; i++) {
 			res = res + diffWaysToSumN(n - i, i, asf + i + " ");
 		}
 		return res;
@@ -532,12 +589,7 @@ public class GFG_DP {
 	// 106.Different ways to sum n using numbers greater than or equal to m
 	// tabulated
 	private static void diffWaysToSumNTabulated(int n) {
-		int[] res = new int[n + 1];
-		res[0] = 1;
-		for (int i = 1; i < res.length; i++) {
 
-		}
-		System.out.println(Arrays.toString(res));
 	}
 
 	// INTERMEDIATE
