@@ -58,9 +58,10 @@ public class GFG_DP {
 		// System.out.println(breakNumberMaxSum(24));
 		// System.out.println(maxValueByDividing(10));
 		// System.out.println(maxValueByDividingTabulated(60));
-		int[][] matrix = { { 4, 2, 3, 4, 1 }, { 2, 9, 1, 10, 5 }, { 15, 1, 3, 0, 20 }, { 16, 92, 41, 44, 1 },
-				{ 8, 142, 6, 4, 8 } };
-		System.out.println(maxWeightPath(matrix, 0, 0, "") + matrix[0][0]);
+		// int[][] matrix = { { 4, 2, 3, 4, 1 }, { 2, 9, 1, 10, 5 }, { 15, 1, 3,
+		// 0, 20 }, { 16, 92, 41, 44, 1 },
+		// { 8, 142, 6, 4, 8 } };
+		// System.out.println(maxWeightPath(matrix, 0, 0, "") + matrix[0][0]);
 	}
 
 	static int count = 0;
@@ -506,6 +507,11 @@ public class GFG_DP {
 				matrix[i + 1][j + 1] + maxWeightPath(matrix, i + 1, j + 1, asf + matrix[i + 1][j + 1] + " "));
 	}
 
+	// 58.Maximum weight path ending at any element of last row in a matrix
+	// tabulated
+	private static void maxWeightPathTabulated(int[][] matrix) {
+	}
+
 	// 66.Minimum number of jumps to reach end
 	// 77.Find n-th element from Stern’s Diatomic Series recursive
 	private static int strensDiatomicSeries(int n) {
@@ -519,6 +525,7 @@ public class GFG_DP {
 		}
 	}
 
+	// 77.Find n-th element from Stern’s Diatomic Series tabulated
 	private static void strensDiatomicSeriesTabulated(int n) {
 		int[] res = new int[n + 1];
 		res[0] = 0;
