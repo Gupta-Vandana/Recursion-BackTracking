@@ -29,7 +29,8 @@ public class DP {
 		// System.out.println(coinChangePermuatations(new int[] { 2, 3, 5, 6 },
 		// 10));
 		// coinChangePermutationsRecursion(new int[] { 2, 3, 5, 6 }, 10, "", 0);
-		//coinChangeCombinationsRecursion(new int[] { 2, 3, 5, 6 }, 7, "", 0, 0);
+		// coinChangeCombinationsRecursion(new int[] { 2, 3, 5, 6 }, 7, "", 0,
+		// 0);
 		// int[][] matrix = { { 1, 0, 1, 0, 0, 1 }, { 1, 0, 1, 1, 1, 1 }, { 1,
 		// 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 0, 0 },
 		// { 1, 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 1, 0 } };
@@ -118,7 +119,6 @@ public class DP {
 				} else {
 					path[i][j] = mine[i][j]
 							+ Math.max(path[i + 1][j + 1], Math.max(path[i - 1][j + 1], path[i][j + 1]));
-
 				}
 			}
 		}

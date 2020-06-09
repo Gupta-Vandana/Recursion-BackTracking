@@ -55,6 +55,12 @@ public class GFG_DP {
 		// fTabulated(6);
 		// System.out.println(strensDiatomicSeries(15));
 		// strensDiatomicSeriesTabulated(15);
+		// System.out.println(breakNumberMaxSum(24));
+		// System.out.println(maxValueByDividing(10));
+		// System.out.println(maxValueByDividingTabulated(60));
+		int[][] matrix = { { 4, 2, 3, 4, 1 }, { 2, 9, 1, 10, 5 }, { 15, 1, 3, 0, 20 }, { 16, 92, 41, 44, 1 },
+				{ 8, 142, 6, 4, 8 } };
+		System.out.println(maxWeightPath(matrix, 0, 0, "") + matrix[0][0]);
 	}
 
 	static int count = 0;
@@ -420,6 +426,7 @@ public class GFG_DP {
 	// if I == N: return 1
 	// if k >= K: return 0
 	// return dyn(I+1,k)+dyn(I+1,k*A[I])
+
 	// 42.Longest subsequence such that difference between adjacents is one
 	private static int longestSubAdjDiffOne(int[] arr) {
 		int[] lengths = new int[arr.length];
@@ -449,6 +456,54 @@ public class GFG_DP {
 		System.out.println(Arrays.toString(lengths));
 		System.out.println(Arrays.toString(paths));
 		return max;
+	}
+
+	// 53.Maximum sum of pairs with specific difference
+	// 54.Maximum size square sub-matrix with all 1s
+	// 56.Recursively break a number in 3 parts to get maximum sum
+	private static int breakNumberMaxSum(int n) {
+		if (n <= 0) {
+			return 0;
+		}
+		if (n == 1) {
+			return 1;
+		}
+		return Math.max(breakNumberMaxSum(n / 2) + breakNumberMaxSum(n / 3) + breakNumberMaxSum(n / 4), n);
+	}
+
+	// 57.Maximum value with the choice of either dividing or considering as it
+	// is recursive
+	private static int maxValueByDividing(int n) {
+		if (n == 0 || n == 1) {
+			return n;
+		}
+		return Math.max(maxValueByDividing(n / 2) + maxValueByDividing(n / 3) + maxValueByDividing(n / 4)
+				+ maxValueByDividing(n / 5), n);
+	}
+
+	// 57.Maximum value with the choice of either dividing or considering as it
+	// is tabulated
+	private static int maxValueByDividingTabulated(int n) {
+		int[] res = new int[n + 1];
+		res[0] = 0;
+		res[1] = 1;
+		for (int i = 2; i < res.length; i++) {
+			res[i] = Math.max(res[i / 2] + res[i / 3] + res[i / 4] + res[i / 5], i);
+		}
+
+		return res[n];
+	}
+
+	// 58.Maximum weight path ending at any element of last row in a matrix
+	// recursive
+	private static int maxWeightPath(int[][] matrix, int i, int j, String asf) {
+		if (i >= matrix.length - 1 || j >= matrix.length - 1) {
+			System.out.println(asf);
+			return 0;
+		}
+
+		return Math.max(matrix[i + 1][j] + maxWeightPath(matrix, i + 1, j, asf + matrix[i + 1][j] + " "),
+				matrix[i + 1][j + 1] + maxWeightPath(matrix, i + 1, j + 1, asf + matrix[i + 1][j + 1] + " "));
 	}
 
 	// 66.Minimum number of jumps to reach end
