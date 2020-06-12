@@ -62,6 +62,12 @@ public class GFG_DP {
 		// 0, 20 }, { 16, 92, 41, 44, 1 },
 		// { 8, 142, 6, 4, 8 } };
 		// System.out.println(maxWeightPath(matrix, 0, 0, "") + matrix[0][0]);
+		// System.out.println(possiblePathsinMNmatrix(3, 3, 0, 0));
+		// System.out.println(possiblePathsinMNmatrixTabulated(3, 3));
+		// System.out.println(noofWaysTileFloor(4));
+		// System.out.println(noofWaysTileFloorTabulated(4));
+		// System.out.println(waysToCoverADistance(3));
+		System.out.println(pathsFromOrigin(3, 0));
 	}
 
 	static int count = 0;
@@ -571,6 +577,119 @@ public class GFG_DP {
 		return res[n];
 	}
 
+	// 86.Counts paths from a point to reach Origin recursive
+	private static int pathsFromOrigin(int n, int m) {
+		if (n == 0 && m == 0) {
+			return 1;
+		}
+		if (n < 0 || m < 0) {
+			return 0;
+		}
+		return pathsFromOrigin(n - 1, m) + pathsFromOrigin(n, m - 1);
+	}
+
+	// 86.Counts paths from a point to reach Origin tabulated
+	private static int pathsFromOriginTabulated(int n, int m) {
+		int[][] res = new int[n + 1][m + 1];
+		res[n][m] = 1;
+		for (int i = n; i >= 0; i--) {
+			for (int j = m; j >= 0; j--) {
+                   
+			}
+		}
+		return res[0][0];
+
+	}
+
+	// 87.Count number of ways to cover a distance recursive
+	private static int waysToCoverADistance(int n) {
+		if (n == 0) {
+			return 1;
+		}
+		if (n < 0) {
+			return 0;
+		}
+		return waysToCoverADistance(n - 1) + waysToCoverADistance(n - 2) + waysToCoverADistance(n - 3);
+	}
+
+	// 87.Count number of ways to cover a distance tabulated
+	private static int waysToCoverADistanceTabulated(int n) {
+		int[] res = new int[n + 1];
+		res[0] = 1;
+		res[1] = 1;
+		res[2] = 2;
+		res[3] = 4;
+		for (int i = 1; i < res.length; i++) {
+			res[i] = res[i - 1] + res[i - 2] + res[i - 3];
+		}
+		return res[n];
+	}
+
+	// 88.Count of arrays having consecutive element with different values
+	// 90.Count the number of ways to tile the floor of size n x m using 1 x m
+	// size tiles
+	// 91.Count all possible paths from top left to bottom right of a mXn matrix
+	// recursive
+	private static int possiblePathsinMNmatrix(int m, int n, int i, int j) {
+		if (i == m - 1 && j == n - 1) {
+			return 1;
+		}
+		if (i > m || j > n) {
+			return 0;
+		}
+		return possiblePathsinMNmatrix(m, n, i + 1, j) + possiblePathsinMNmatrix(m, n, i, j + 1);
+	}
+
+	// 91.Count all possible paths from top left to bottom right of a mXn matrix
+	// tabulated
+	private static int possiblePathsinMNmatrixTabulated(int m, int n) {
+		int[][] res = new int[m][n];
+		for (int i = m - 1; i >= 0; i--) {
+			for (int j = n - 1; j >= 0; j--) {
+				if (i == m - 1 && j == n - 1) {
+					res[i][j] = 1;
+				} else if (i == m - 1) {
+					res[i][j] = res[i][j + 1];
+				} else if (j == n - 1) {
+					res[i][j] = res[i + 1][j];
+				} else {
+					res[i][j] = res[i + 1][j] + res[i][j + 1];
+				}
+			}
+		}
+		return res[0][0];
+	}
+
+	// 92.Count number of ways to fill a “n x 4” grid using “1 x 4” tiles
+	// recursive
+	private static int noofWaysTileFloor(int n) {
+		if (n == 0) {
+			return 1;
+		}
+		if (n < 0) {
+			return 0;
+
+		}
+		return noofWaysTileFloor(n - 1) + noofWaysTileFloor(n - 4);
+	}
+
+	// 92.Count number of ways to fill a “n x 4” grid using “1 x 4” tiles
+	// tabulated
+	private static int noofWaysTileFloorTabulated(int n) {
+		int[] res = new int[n + 1];
+		res[0] = 0;
+		res[1] = 1;
+		res[2] = 1;
+		res[3] = 1;
+		res[4] = 2;
+		for (int i = 5; i < res.length; i++) {
+			res[i] = res[i - 1] + res[i - 4];
+		}
+		System.out.println(Arrays.toString(res));
+		return res[n];
+	}
+	// 93.Largest Sum Contiguous Subarray
+
 	// 99.Ways to sum to N using array elements with repetition allowed
 	// recursive
 	private static int waysToSumNArrElements(int n, int[] arr, String asf) {
@@ -629,6 +748,17 @@ public class GFG_DP {
 			}
 		}
 		System.out.println(Arrays.toString(res));
+	}
+
+	// 100.Unique paths in a Grid with Obstacles recursive
+	private void uniquePathsWithObstacles(int[][] matrix, int i, int j) {
+
+	}
+
+	// 102.Number of ways to arrange N items under given constraints
+	private void arrangeNitemsGiven() {
+		// TODO Auto-generated method stub
+
 	}
 
 	// 106.Different ways to sum n using numbers greater than or equal to m
