@@ -67,7 +67,16 @@ public class GFG_DP {
 		// System.out.println(noofWaysTileFloor(4));
 		// System.out.println(noofWaysTileFloorTabulated(4));
 		// System.out.println(waysToCoverADistance(3));
-		System.out.println(pathsFromOrigin(3, 0));
+		// System.out.println(pathsFromOrigin(3, 0));
+		// System.out.println(noOfWaysToScore(new int[] { 3, 5, 10 }, " ", 20,
+		// 0));
+		// System.out.println(noOfWaysToScoreTabulated(13, new int[] { 3, 5, 10
+		// }));
+		// System.out.println(waysToReachStair(4));
+		// System.out.println(balancedBinaryTrees(4));
+		// System.out.println(balancedBinaryTreesTabulated(4));
+		// System.out.println(countingpairs(3));
+		// System.out.println(countingpairsTabulated(3));
 	}
 
 	static int count = 0;
@@ -547,6 +556,56 @@ public class GFG_DP {
 
 	}
 
+	// 80.Count number of ways to reach a given score in a game recursive
+	private static int noOfWaysToScore(int[] arr, String asf, int n, int li) {
+		int res = 0;
+		if (n < 0) {
+			return 0;
+		}
+		if (n == 0) {
+			return 1;
+		}
+		for (int i = li; i < arr.length; i++) {
+			res = res + noOfWaysToScore(arr, asf + arr[i] + " ", n - arr[i], i);
+		}
+		return res;
+	}
+
+	// 80.Count number of ways to reach a given score in a game tabulated
+	private static int noOfWaysToScoreTabulated(int target, int[] coins) {
+		int[] ways = new int[target + 1];
+		ways[0] = 1;
+		for (int coin = 0; coin < coins.length; coin++) {
+			for (int way = coins[coin]; way < ways.length; way++) {
+				ways[way] = ways[way] + ways[way - coins[coin]];
+			}
+		}
+		return ways[target];
+	}
+
+	// 81.Count ways to reach the nth stair using step 1, 2 or 3 recursive
+	private static int waysToReachStair(int n) {
+		if (n == 0) {
+			return 1;
+		}
+		if (n < 0) {
+			return 0;
+		}
+		return waysToReachStair(n - 1) + waysToReachStair(n - 2) + waysToReachStair(n - 3);
+	}
+
+	// 81.Count ways to reach the nth stair using step 1, 2 or 3 tabulated
+	private static int waysToReachStairTabulated(int n) {
+		int[] arr = new int[n + 1];
+		arr[0] = 1;
+		arr[1] = 1;
+		arr[2] = 2;
+		for (int i = 3; i < arr.length; i++) {
+			arr[i] = arr[i - 1] + arr[i - 2] + arr[i - 3];
+		}
+		return arr[n];
+	}
+
 	// 82.Count of different ways to express N as the sum of 1, 3 and 4
 	// recursive
 	private static int diffWaysToExpressN(int n, String asf) {
@@ -577,6 +636,50 @@ public class GFG_DP {
 		return res[n];
 	}
 
+	// 83.
+	// 84.Count Balanced Binary Trees of Height h recursive
+	private static int balancedBinaryTrees(int h) {
+		if (h == 0 || h == 1) {
+			return 1;
+		}
+		if (h < 0) {
+			return 0;
+		}
+		return balancedBinaryTrees(h - 1) * balancedBinaryTrees(h - 2)
+				+ balancedBinaryTrees(h - 2) * balancedBinaryTrees(h - 1)
+				+ balancedBinaryTrees(h - 1) * balancedBinaryTrees(h - 1);
+	}
+
+	// 84.Count Balanced Binary Trees of Height h recursive tabulated
+	private static int balancedBinaryTreesTabulated(int h) {
+		int[] res = new int[h + 1];
+		res[0] = 1;
+		res[1] = 1;
+		for (int i = 2; i < res.length; i++) {
+			res[i] = res[i - 1] * (2 * res[i - 2] + res[i - 1]);
+		}
+		return res[h];
+	}
+
+	// 85.Counting pairs when a person can form pair with at most one recursive
+	private static int countingpairs(int n) {
+		if (n == 0 || n == 1) {
+			return 1;
+		}
+		return countingpairs(n - 1) + (n - 1) * countingpairs(n - 2);
+	}
+
+	// 85.Counting pairs when a person can form pair with at most one tabulated
+	private static int countingpairsTabulated(int n) {
+		int[] res = new int[n + 1];
+		res[0] = 1;
+		res[1] = 1;
+		for (int i = 2; i < res.length; i++) {
+			res[i] = res[i - 1] + (i - 1) * res[i - 2];
+		}
+		return res[n];
+	}
+
 	// 86.Counts paths from a point to reach Origin recursive
 	private static int pathsFromOrigin(int n, int m) {
 		if (n == 0 && m == 0) {
@@ -594,7 +697,7 @@ public class GFG_DP {
 		res[n][m] = 1;
 		for (int i = n; i >= 0; i--) {
 			for (int j = m; j >= 0; j--) {
-                   
+
 			}
 		}
 		return res[0][0];
@@ -681,8 +784,7 @@ public class GFG_DP {
 		res[1] = 1;
 		res[2] = 1;
 		res[3] = 1;
-		res[4] = 2;
-		for (int i = 5; i < res.length; i++) {
+		for (int i = 4; i < res.length; i++) {
 			res[i] = res[i - 1] + res[i - 4];
 		}
 		System.out.println(Arrays.toString(res));
@@ -785,8 +887,8 @@ public class GFG_DP {
 	}
 
 	// INTERMEDIATE
+	
 	// 10. 0/1 knapsack problem recursive
-
 	private static void zero_oneKnapsackRecursive(int W, int[] weights, int[] profits, int w, int profit, String asf,
 			int vidx) {
 		if (vidx == profits.length) {
