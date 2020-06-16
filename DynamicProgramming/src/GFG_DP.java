@@ -3,69 +3,81 @@ import java.util.Arrays;
 public class GFG_DP {
 
 	public static void main(String[] args) {
-		System.out.println(catalanNumberRecursive(4));
-		System.out.println(catalanNumberTabulization(8));
-		System.out.println(stirlingNumber(3, 2));
-		System.out.println(binomialCoefficientRecursive(0, 3));
-		System.out.println(binomialCoefficientTabulization(12, 10));
-		System.out.println(permutationCoefficientRecursive(10, 3));
-		System.out.println(permutationCoefficientTabulaization(8, 3));
-		tilingProblemRecursive(3, 2, "");
-		tilingProblemTabulated(3, 2);
-		zero_oneKnapsackRecursive(7, new int[] { 2, 5, 1, 3, 4 }, new int[] { 15, 14, 10, 45, 30 }, 0, 0, "", 0);
-		System.out.println(subSetTargetRecursive(new int[] { 3, 34, 4, 12, 5, 2 }, 9, 5));
-		System.out.println(newmanWilliamsRecursive(7));
-		System.out.println(newmanWilliamstabulated(7));
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 3; j++) {
-				System.out.print(nCrPRecursive(i, j, 13));
-				System.out.print(",");
-			}
-			System.out.println();
-		}
-		System.out.println(nCrPTabulated(10, 2, 13));
-		System.out.println(" ".length());
-		System.out.println(longestCommonSubsequenceRecursive("AGGTAB", "GXTXAYB"));
-		maxSumIncreasingSubsequence(new int[] { 10, 4, 5, 3 });
-		maxProductIncreasing(new int[] { 10, 22, 9, 33, 21, 50, 41, 60 });
-		System.out.println(subsequencesProductLessThanK(new int[] { 1, 2, 3, 4 }, 10, 0, 1));
-		System.out.println(Math.max(maxSumWithNoTwoAdjacent(new int[] { 5, 6, 10, 100, 10, 6 }, 0, "", 0),
-				maxSumWithNoTwoAdjacent(new int[] { 5, 6, 10, 100, 10, 6 }, 1, "", 0)));
-		System.out.println(maxSumWithNoTwoAdjacentTabulated(new int[] { 5, 6, 10, 100, 10, 6 }));
-		System.out.println(longestSubAdjDiffOne(new int[] { 1, 2, 3, 2, 3, 7, 2, 1 }));
-		System.out.println(diffWaysToSumN(10, 5, ""));
-		System.out.println(diffWaysToExpressN(3, ""));
-		System.out.println(diffWaysToExpressNTabulated(10));
-		System.out.println(waysToSumNArrElements(14, new int[] { 12, 3, 1, 9 }, ""));
-		waysToSumNArrElementsTabulated(14, new int[] { 12, 3, 1, 9 });
-		f(6, "");
-		diffWaysToSumN(6, 1, "");
-		fTabulated(6);
-		System.out.println(strensDiatomicSeries(15));
-		strensDiatomicSeriesTabulated(15);
-		System.out.println(breakNumberMaxSum(24));
-		System.out.println(maxValueByDividing(10));
-		System.out.println(maxValueByDividingTabulated(60));
-		int[][] matrix = { { 4, 2, 3, 4, 1 }, { 2, 9, 1, 10, 5 }, { 15, 1, 3, 0, 20 }, { 16, 92, 41, 44, 1 },
-				{ 8, 142, 6, 4, 8 } };
-		System.out.println(maxWeightPath(matrix, 0, 0, "") + matrix[0][0]);
-		System.out.println(possiblePathsinMNmatrix(3, 3, 0, 0));
-		System.out.println(possiblePathsinMNmatrixTabulated(3, 3));
-		System.out.println(noofWaysTileFloor(4));
-		System.out.println(noofWaysTileFloorTabulated(4));
-		System.out.println(waysToCoverADistance(3));
-		System.out.println(pathsFromOrigin(3, 0));
-		System.out.println(noOfWaysToScore(new int[] { 3, 5, 10 }, " ", 20, 0));
-		System.out.println(noOfWaysToScoreTabulated(13, new int[] { 3, 5, 10 }));
-		System.out.println(waysToReachStair(4));
-		System.out.println(balancedBinaryTrees(4));
-		System.out.println(balancedBinaryTreesTabulated(4));
-		System.out.println(countingpairs(3));
-		System.out.println(countingpairsTabulated(3));
-		System.out.println(EulerianNumber(3, 1));
-		System.out.println(EulerianNumberTabulated(3, 1));
-		System.out.println(DelannoyNumber(4, 5));
-		System.out.println(DelannoyNumberTabulated(4, 5));
+		// System.out.println(catalanNumberRecursive(4));
+		// System.out.println(catalanNumberTabulization(8));
+		// System.out.println(stirlingNumber(3, 2));
+		// System.out.println(binomialCoefficientRecursive(0, 3));
+		// System.out.println(binomialCoefficientTabulization(12, 10));
+		// System.out.println(permutationCoefficientRecursive(10, 3));
+		// System.out.println(permutationCoefficientTabulaization(8, 3));
+		// tilingProblemRecursive(3, 2, "");
+		// tilingProblemTabulated(3, 2);
+		// zero_oneKnapsackRecursive(7, new int[] { 2, 5, 1, 3, 4 }, new int[] {
+		// 15, 14, 10, 45, 30 }, 0, 0, "", 0);
+		// System.out.println(subSetTargetRecursive(new int[] { 3, 34, 4, 12, 5,
+		// 2 }, 9, 5));
+		// System.out.println(newmanWilliamsRecursive(7));
+		// System.out.println(newmanWilliamstabulated(7));
+		// for (int i = 0; i < 10; i++) {
+		// for (int j = 0; j < 3; j++) {
+		// System.out.print(nCrPRecursive(i, j, 13));
+		// System.out.print(",");
+		// }
+		// System.out.println();
+		// }
+		// System.out.println(nCrPTabulated(10, 2, 13));
+		// System.out.println(" ".length());
+		// System.out.println(longestCommonSubsequenceRecursive("AGGTAB",
+		// "GXTXAYB"));
+		// maxSumIncreasingSubsequence(new int[] { 10, 4, 5, 3 });
+		// maxProductIncreasing(new int[] { 10, 22, 9, 33, 21, 50, 41, 60 });
+		// System.out.println(subsequencesProductLessThanK(new int[] { 1, 2, 3,
+		// 4 }, 10, 0, 1));
+		// System.out.println(Math.max(maxSumWithNoTwoAdjacent(new int[] { 5, 6,
+		// 10, 100, 10, 6 }, 0, "", 0),
+		// maxSumWithNoTwoAdjacent(new int[] { 5, 6, 10, 100, 10, 6 }, 1, "",
+		// 0)));
+		// System.out.println(maxSumWithNoTwoAdjacentTabulated(new int[] { 5, 6,
+		// 10, 100, 10, 6 }));
+		// System.out.println(longestSubAdjDiffOne(new int[] { 1, 2, 3, 2, 3, 7,
+		// 2, 1 }));
+		// System.out.println(diffWaysToSumN(10, 5, ""));
+		// System.out.println(diffWaysToExpressN(3, ""));
+		// System.out.println(diffWaysToExpressNTabulated(10));
+		// System.out.println(waysToSumNArrElements(14, new int[] { 12, 3, 1, 9
+		// }, ""));
+		// waysToSumNArrElementsTabulated(14, new int[] { 12, 3, 1, 9 });
+		// f(6, "");
+		// diffWaysToSumN(6, 1, "");
+		// fTabulated(6);
+		// System.out.println(strensDiatomicSeries(15));
+		// strensDiatomicSeriesTabulated(15);
+		// System.out.println(breakNumberMaxSum(24));
+		// System.out.println(maxValueByDividing(10));
+		// System.out.println(maxValueByDividingTabulated(60));
+		// int[][] matrix = { { 4, 2, 3, 4, 1 }, { 2, 9, 1, 10, 5 }, { 15, 1, 3,
+		// 0, 20 }, { 16, 92, 41, 44, 1 },
+		// { 8, 142, 6, 4, 8 } };
+		// System.out.println(maxWeightPath(matrix, 0, 0, "") + matrix[0][0]);
+		// System.out.println(possiblePathsinMNmatrix(3, 3, 0, 0));
+		// System.out.println(possiblePathsinMNmatrixTabulated(3, 3));
+		// System.out.println(noofWaysTileFloor(4));
+		// System.out.println(noofWaysTileFloorTabulated(4));
+		// System.out.println(waysToCoverADistance(3));
+		// System.out.println(pathsFromOrigin(3, 0));
+		// System.out.println(noOfWaysToScore(new int[] { 3, 5, 10 }, " ", 20,
+		// 0));
+		// System.out.println(noOfWaysToScoreTabulated(13, new int[] { 3, 5, 10
+		// }));
+		// System.out.println(waysToReachStair(4));
+		// System.out.println(balancedBinaryTrees(4));
+		// System.out.println(balancedBinaryTreesTabulated(4));
+		// System.out.println(countingpairs(3));
+		// System.out.println(countingpairsTabulated(3));
+		// System.out.println(EulerianNumber(3, 1));
+		// System.out.println(EulerianNumberTabulated(3, 1));
+		// System.out.println(DelannoyNumber(4, 5));
+		// System.out.println(DelannoyNumberTabulated(4, 5));
 	}
 
 	static int count = 0;
@@ -903,7 +915,12 @@ public class GFG_DP {
 	}
 
 	// 4.Entringer Number recursive
-	// 4.Entringer Number tabulated
+	// 5.Rencontres Number
+	// 6.Jacobsthal and Jacobsthal-Lucas numbers
+	// 7.
+	// 8.Floyd Warshall Algorithm
+	// 9.Bellman–Ford Algorithm
+	// 10.
 	// 10. 0/1 knapsack problem recursive
 	private static void zero_oneKnapsackRecursive(int W, int[] weights, int[] profits, int w, int profit, String asf,
 			int vidx) {
