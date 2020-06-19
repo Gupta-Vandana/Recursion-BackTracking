@@ -84,7 +84,7 @@ public class GFG_DP {
 		// new int[] { 5, 6, 5, 3, 1 }, 5, 20));
 		// System.out.println(PartitionProblem(new int[] { 3, 1, 5, 9, 12 }, 0,
 		// 15));
-		System.out.println(LongestCommonSubstring("abcdxyz", "xyzabcd", 0, 0, 0));
+		
 	}
 
 	static int count = 0;
@@ -551,30 +551,19 @@ public class GFG_DP {
 	// tabulated
 	// 66.Minimum number of jumps to reach end
 	// 73.Longest Common Substring
-	private static int LongestCommonSubstring(String X, String Y, int i, int j, int count) {
-		// if (a.length() == 0 || b.length() == 0) {
-		// System.out.println("whts is happeing");
-		// return count;
-		// }
-		// int i = 0;
-		// if (a.charAt(i) == b.charAt(i)) {
-		// count = LongestCommonSubstring(a.substring(1), b.substring(1), count
-		// + 1);
-		// }
-		// return Math.max(count,
-		// Math.max(LongestCommonSubstring(a.substring(1), b, 0),
-		// LongestCommonSubstring(a, b.substring(1), 0)));
-		//
-		if (i == 0 || j == 0) {
+	// WRONG
+	private static int LongestCommonSubstring(String a, String b, int count) {
+		if (a.length() == 0 || b.length() == 0) {
+			System.out.println("whts is happeing");
 			return count;
 		}
-
-		if (X.charAt(i - 1) == Y.charAt(j - 1)) {
-			count = LongestCommonSubstring(X, Y, i - 1, j - 1, count + 1);
+		int i = 0;
+		if (a.charAt(i) == b.charAt(i)) {
+			count = LongestCommonSubstring(a.substring(1), b.substring(1), count + 1);
 		}
-		count = Math.max(count,
-				Math.max(LongestCommonSubstring(X, Y, i, j - 1, 0), LongestCommonSubstring(X, Y, i - 1, j, 0)));
-		return count;
+		return Math.max(count,
+				Math.max(LongestCommonSubstring(a.substring(1), b, 0), LongestCommonSubstring(a, b.substring(1), 0)));
+
 	}
 
 	// 77.Find n-th element from Stern’s Diatomic Series recursive
