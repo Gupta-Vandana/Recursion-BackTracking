@@ -28,7 +28,9 @@ public class GFG_DP {
 		// System.out.println(nCrPTabulated(10, 2, 13));
 		// System.out.println(" ".length());
 		// System.out.println(longestCommonSubsequenceRecursive("AGGTAB",
-		// "GXTXAYB"));
+		// "AGGTAB"));
+		// System.out.println(longestCommonSubsequenceTabulated("AGGTAB",
+		// "ABCDGH"));
 		// maxSumIncreasingSubsequence(new int[] { 10, 4, 5, 3 });
 		// maxProductIncreasing(new int[] { 10, 22, 9, 33, 21, 50, 41, 60 });
 		// System.out.println(subsequencesProductLessThanK(new int[] { 1, 2, 3,
@@ -78,6 +80,11 @@ public class GFG_DP {
 		// System.out.println(EulerianNumberTabulated(3, 1));
 		// System.out.println(DelannoyNumber(4, 5));
 		// System.out.println(DelannoyNumberTabulated(4, 5));
+		// System.out.println(HighwayBillboard(new int[] { 6, 7, 12, 13, 14 },
+		// new int[] { 5, 6, 5, 3, 1 }, 5, 20));
+		// System.out.println(PartitionProblem(new int[] { 3, 1, 5, 9, 12 }, 0,
+		// 15));
+		System.out.println(LongestCommonSubstring("abcdxyz", "xyzabcd", 0, 0, 0));
 	}
 
 	static int count = 0;
@@ -329,6 +336,23 @@ public class GFG_DP {
 	}
 
 	// 32.Longest common subsequence tabulated
+	private static int longestCommonSubsequenceTabulated(String a, String b) {
+		int[][] res = new int[a.length() + 1][b.length() + 1];
+		for (int i = 0; i < res.length; i++) {
+			for (int j = 0; j < res[0].length; j++) {
+				if (i == 0 || j == 0) {
+					res[i][j] = 0;
+				} else if (a.charAt(i - 1) == b.charAt(j - 1)) {
+					res[i][j] = 1 + res[i - 1][j - 1];
+				} else {
+					res[i][j] = Math.max(res[i - 1][j], res[i][j - 1]);
+				}
+			}
+		}
+		return res[res.length - 1][res[0].length - 1];
+
+	}
+
 	// 38.Maximum Sum Increasing Subsequence recursive
 	// 38.Maximum Sum Increasing Subsequence tabulated
 	private static void maxSumIncreasingSubsequence(int[] arr) {
@@ -526,6 +550,33 @@ public class GFG_DP {
 	// 58.Maximum weight path ending at any element of last row in a matrix
 	// tabulated
 	// 66.Minimum number of jumps to reach end
+	// 73.Longest Common Substring
+	private static int LongestCommonSubstring(String X, String Y, int i, int j, int count) {
+		// if (a.length() == 0 || b.length() == 0) {
+		// System.out.println("whts is happeing");
+		// return count;
+		// }
+		// int i = 0;
+		// if (a.charAt(i) == b.charAt(i)) {
+		// count = LongestCommonSubstring(a.substring(1), b.substring(1), count
+		// + 1);
+		// }
+		// return Math.max(count,
+		// Math.max(LongestCommonSubstring(a.substring(1), b, 0),
+		// LongestCommonSubstring(a, b.substring(1), 0)));
+		//
+		if (i == 0 || j == 0) {
+			return count;
+		}
+
+		if (X.charAt(i - 1) == Y.charAt(j - 1)) {
+			count = LongestCommonSubstring(X, Y, i - 1, j - 1, count + 1);
+		}
+		count = Math.max(count,
+				Math.max(LongestCommonSubstring(X, Y, i, j - 1, 0), LongestCommonSubstring(X, Y, i - 1, j, 0)));
+		return count;
+	}
+
 	// 77.Find n-th element from Stern’s Diatomic Series recursive
 	private static int strensDiatomicSeries(int n) {
 		if (n == 0 || n == 1) {
@@ -939,6 +990,44 @@ public class GFG_DP {
 				asf + "W->" + weights[vidx] + " " + "P->" + profits[vidx] + " ", vidx + 1);
 		zero_oneKnapsackRecursive(W, weights, profits, w, profit, asf, vidx + 1);
 	}
+
 	// 10. 0/1 knapsack problem tabulated
+	// 20.Highway Billboard Problem tabulated
+	private static int HighwayBillboard(int[] miles, int[] revenue, int t, int mile) {
+		String[] path = new String[miles.length];
+		Arrays.fill(path, "");
+		path[0] = String.valueOf(miles[0]);
+		int[] r = new int[miles.length];
+		int max = 0;
+		r[0] = revenue[0];
+		for (int i = 1; i < r.length; i++) {
+			for (int j = 0; j < i; j++) {
+				if (miles[i] - miles[j] > t) {
+					if (r[j] > r[i]) {
+						r[i] = r[j];
+						path[i] = path[j];
+					}
+				}
+			}
+			r[i] += revenue[i];
+			path[i] += " " + miles[i];
+			max = Math.max(max, r[i]);
+
+		}
+		System.out.println(Arrays.toString(path));
+		System.out.println(Arrays.toString(r));
+		return max;
+	}
+
+	// 22.Partition problem
+	private static boolean PartitionProblem(int[] arr, int vidx, int sum) {
+		if (sum == 0 && vidx == arr.length - 1) {
+			return true;
+		}
+		if (sum < 0 || vidx >= arr.length) {
+			return false;
+		}
+		return PartitionProblem(arr, vidx + 1, sum - arr[vidx]) || PartitionProblem(arr, vidx + 1, sum);
+	}
 
 }

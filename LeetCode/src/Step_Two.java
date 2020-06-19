@@ -111,6 +111,7 @@ public class Step_Two {
 	}
 
 	static List<List<Integer>> result = new ArrayList<List<Integer>>();
+	static List<List<Integer>> ans = new ArrayList<>();
 
 	// for unique elements in array
 	public static void combinationSum1(int[] arr, int noOfcall, int ssf, List<Integer> set, int li) {
