@@ -27,8 +27,8 @@ public class GFG_DP {
 		// }
 		// System.out.println(nCrPTabulated(10, 2, 13));
 		// System.out.println(" ".length());
-		// System.out.println(longestCommonSubsequenceRecursive("AGGTAB",
-		// "AGGTAB"));
+		// System.out.println(longestCommonSubsequenceRecursive("babab",
+		// "babba"));
 		// System.out.println(longestCommonSubsequenceTabulated("AGGTAB",
 		// "ABCDGH"));
 		// maxSumIncreasingSubsequence(new int[] { 10, 4, 5, 3 });
@@ -84,7 +84,13 @@ public class GFG_DP {
 		// new int[] { 5, 6, 5, 3, 1 }, 5, 20));
 		// System.out.println(PartitionProblem(new int[] { 3, 1, 5, 9, 12 }, 0,
 		// 15));
-		
+		// System.out.println(LongestCommonSubstring("forgeeksskeegfor",
+		// "rofgeeksskeegrof", 0));
+		// System.out.println(LongestCommonSubstringTabulated("forgeeksskeegfor",
+		// "rofgeeksskeegrof"));
+		// LongestOddEvenSubsequence(new int[] { 5, 6, 9, 4, 7, 8 });
+		System.out.println(mcm(new int[] { 40, 20, 30, 10, 30 }, 0, 4, new int[][] { {} }));
+
 	}
 
 	static int count = 0;
@@ -353,6 +359,14 @@ public class GFG_DP {
 
 	}
 
+	// LCS related operations
+	// Minimum Number of Insertion and Deletion to convert String a to String b
+	private void insertionDeletionToTransform(String a, String b) {
+		int lcs = longestCommonSubsequenceRecursive(a, b);
+		System.out.println(a.length() - lcs + "deletions");
+		System.out.println(b.length() - lcs + "insertions");
+	}
+
 	// 38.Maximum Sum Increasing Subsequence recursive
 	// 38.Maximum Sum Increasing Subsequence tabulated
 	private static void maxSumIncreasingSubsequence(int[] arr) {
@@ -550,20 +564,41 @@ public class GFG_DP {
 	// 58.Maximum weight path ending at any element of last row in a matrix
 	// tabulated
 	// 66.Minimum number of jumps to reach end
-	// 73.Longest Common Substring
-	// WRONG
-	private static int LongestCommonSubstring(String a, String b, int count) {
+	// 73.Longest Common Substring recursive
+	private static int LongestCommonSubstring(String a, String b, int c) {
 		if (a.length() == 0 || b.length() == 0) {
-			System.out.println("whts is happeing");
-			return count;
+			return c;
 		}
-		int i = 0;
-		if (a.charAt(i) == b.charAt(i)) {
-			count = LongestCommonSubstring(a.substring(1), b.substring(1), count + 1);
-		}
-		return Math.max(count,
-				Math.max(LongestCommonSubstring(a.substring(1), b, 0), LongestCommonSubstring(a, b.substring(1), 0)));
 
+		if (a.charAt(0) == b.charAt(0)) {
+			c = LongestCommonSubstring(a.substring(1), b.substring(1), c + 1);
+		}
+		int l1 = LongestCommonSubstring(a.substring(1), b, 0);
+		int l2 = LongestCommonSubstring(a, b.substring(1), 0);
+		return Math.max(c, Math.max(l1, l2));
+
+	}
+
+	// 73.Longest Common Substring recursive
+	private static int LongestCommonSubstringTabulated(String a, String b) {
+		int[][] res = new int[a.length() + 1][b.length() + 1];
+		for (int i = 0; i < res.length; i++) {
+			for (int j = 0; j < res[0].length; j++) {
+				if (i == 0 || j == 0) {
+					res[i][j] = 0;
+				} else if (a.charAt(i - 1) == b.charAt(j - 1)) {
+					res[i][j] = res[i - 1][j - 1] + 1;
+				} else {
+					res[i][j] = 0;
+					// Math.max(res[i - 1][j - 1], Math.max(res[i - 1][j],
+					// res[i][j - 1]));
+				}
+			}
+		}
+		for (int i = 0; i < res.length; i++) {
+			System.out.println(Arrays.toString(res[i]));
+		}
+		return res[res.length - 1][res[0].length - 1];
 	}
 
 	// 77.Find n-th element from Stern’s Diatomic Series recursive
@@ -1008,7 +1043,7 @@ public class GFG_DP {
 		return max;
 	}
 
-	// 22.Partition problem
+	// 22.Partition problem recursive
 	private static boolean PartitionProblem(int[] arr, int vidx, int sum) {
 		if (sum == 0 && vidx == arr.length - 1) {
 			return true;
@@ -1017,6 +1052,82 @@ public class GFG_DP {
 			return false;
 		}
 		return PartitionProblem(arr, vidx + 1, sum - arr[vidx]) || PartitionProblem(arr, vidx + 1, sum);
+	}
+
+	// 22.Partition problem recursive
+	// 29.Longest Palindromic Subsequence
+	// 141.Find length of longest subsequence of one string which is substring
+	// of another string
+	// f(i + 1, j) = max(f(i + 1, j), f(i, j)) //skip this character in X
+	// if X[i] == Y[j] //add this character to current answer
+	// f(i + 1, j + 1) = max(f(i + 1, j + 1), f(i, j) + 1)
+	// 38.Maximum sum alternating subsequence
+	// NOT DONE
+	private static int maxSumAlternatingSubsequence(int[] arr) {
+		int[] sum = new int[arr.length];
+		sum[0] = arr[0];
+		String[] path = new String[arr.length];
+		path[0] = arr[0] + " ";
+		boolean positive = arr[0] > arr[1];
+		int max = Integer.MIN_VALUE;
+		for (int i = 1; i < path.length; i++) {
+			for (int j = 0; j < i; j++) {
+				if (positive) {
+					if (j % 2 == 1 && sum[j] < sum[i]) {
+						sum[i] = sum[j];
+						path[i] = path[j];
+					}
+				} else {
+					if (j % 2 == 0 && sum[j] < sum[i]) {
+						sum[i] = sum[j];
+						path[i] = path[j];
+					}
+				}
+			}
+			sum[i] += arr[i];
+			path[i] += arr[i];
+			max = Math.min(max, sum[i]);
+		}
+		return max;
+	}
+
+	// 47.Printing Maximum Sum Increasing Subsequence
+	// 48.Longest Increasing Odd Even Subsequence
+	private static void LongestOddEvenSubsequence(int[] arr) {
+		int[] res = new int[arr.length];
+		res[0] = 1;
+		String[] path = new String[arr.length];
+		path[0] = arr[0] + " ";
+		for (int i = 1; i < path.length; i++) {
+			for (int j = 0; j < i; j++) {
+				if (arr[j] < arr[i] && arr[j] + arr[i] % 2 != 0) {
+					if (res[j] > res[i]) {
+						res[i] = res[j];
+						path[i] = path[j];
+					}
+				}
+			}
+			res[i] += 1;
+			path[i] += arr[i] + " ";
+		}
+		System.out.println(Arrays.toString(res));
+		System.out.println(Arrays.toString(path));
+	}
+
+	// HARD
+	// 8.Matrix Chain Multiplication
+	private static int mcm(int[] arr, int i, int j, int[][] qb) {
+		if (j - i == 1) {
+			return 0;
+		}
+		int min = Integer.MAX_VALUE;
+		for (int k = i + 1; k < j; k++) {
+			int l = mcm(arr, i, k, qb);
+			int r = mcm(arr, k, j, qb);
+			int tc = arr[i] * arr[j] * arr[k];
+			min = Math.min(min, l + r + tc);
+		}
+		return min;
 	}
 
 }
