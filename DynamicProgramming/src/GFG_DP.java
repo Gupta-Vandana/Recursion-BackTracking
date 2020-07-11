@@ -93,7 +93,8 @@ public class GFG_DP {
 		// int[][] { {} }));
 		// String s = "ababbbabbababa";
 		// System.out.println(PalindromePartitioning(s, 0, s.length() - 1));
-		//System.out.println(UnboundedKnapsack(new int[] { 1, 3, 4, 5 }, new int[] { 10, 40, 50, 70 }, 8, 0, " "));
+		// System.out.println(UnboundedKnapsack(new int[] { 1, 3, 4, 5 }, new
+		// int[] { 10, 40, 50, 70 }, 8, 0, " "));
 		// System.out.println(zero_oneKnapsackTabulated(new int[] { 10, 20, 30
 		// }, new int[] { 60, 100, 120 }, 50));
 		// zero_oneKnapsack(7, new int[] { 2, 5, 1, 3, 4 }, new int[] { 15, 14,
@@ -1120,7 +1121,7 @@ public class GFG_DP {
 			return UnboundedKnapsack(weights, profits, W, vidx + 1, asf);
 	}
 
-	// 15.Dice Throw
+	// 15.Dice Throw recursive
 	private static int DiceThrow(int n, int m, int x, String asf) {
 		int res = 0;
 		if (n == 0) {
@@ -1137,6 +1138,7 @@ public class GFG_DP {
 		return res;
 	}
 
+	// 15.Dice Throw tabulated
 	// 20.Highway Billboard Problem tabulated
 	private static int HighwayBillboard(int[] miles, int[] revenue, int t, int mile) {
 		String[] path = new String[miles.length];
