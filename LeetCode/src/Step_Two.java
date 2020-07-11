@@ -23,22 +23,19 @@ public class Step_Two {
 		// }
 		// steps(5, "");
 		// System.out.println("~~~~~~~~~");
-		// PrintNnCombo(4, "");
+		 PrintNnCombo(4, "");
+		 System.out.println("~~~~~~~~~");
+		 PrintNnComboB(4, "", 1);
+		 System.out.println("~~~~~~~~~");
+		 PrintNnComboC(4, "", 0);
 		// System.out.println("~~~~~~~~~");
-		// PrintNnComboB(4, "", 1);
-		// System.out.println("~~~~~~~~~");
-		// PrintNnComboC(4, "", 0);
-		// System.out.println("~~~~~~~~~");
-		// combinationSum1(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new
-		// ArrayList<>(), -1);
+		//combinationSum1(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new ArrayList<>(), -1);
 		// Arrays.toString(result.toArray());
 		// System.out.println("~~~~~~~~~");
-		// combinationSum2(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new
-		// ArrayList<>(), 0);
+		//combinationSum2(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new ArrayList<>(), 0);
 		// Arrays.toString(result.toArray());
 		// System.out.println("~~~~~~~~~");
-		// combinationSum3(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new
-		// ArrayList<>());
+		//combinationSum3(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new ArrayList<>());
 		// Arrays.toString(result.toArray());
 		// combination1(new int[] { 1, 2, 3, 4 }, 3, new ArrayList<>());
 		// Arrays.toString(result.toArray());
@@ -54,7 +51,7 @@ public class Step_Two {
 		// kpc("263", "");
 		// BoardPath(10, "", 0);
 		// MazePath(new int[3][3], 2, 2, "_");
-		MazePathMultiMoves(new int[5][5], 0, 0, "");
+		// MazePathMultiMoves(new int[5][5], 0, 0, "");
 
 	}
 

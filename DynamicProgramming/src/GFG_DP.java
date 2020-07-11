@@ -12,10 +12,10 @@ public class GFG_DP {
 		// System.out.println(permutationCoefficientTabulaization(8, 3));
 		// tilingProblemRecursive(3, 2, "");
 		// tilingProblemTabulated(3, 2);
-		// zero_oneKnapsackRecursive(7, new int[] { 2, 5, 1, 3, 4 }, new int[] {
-		// 15, 14, 10, 45, 30 }, 0, 0, "", 0);
 		// System.out.println(subSetTargetRecursive(new int[] { 3, 34, 4, 12, 5,
 		// 2 }, 9, 5));
+		// System.out.println(subSetTargetTabulated(new int[] { 3, 34, 4, 12, 5,
+		// 2 }, 89));
 		// System.out.println(newmanWilliamsRecursive(7));
 		// System.out.println(newmanWilliamstabulated(7));
 		// for (int i = 0; i < 10; i++) {
@@ -89,7 +89,22 @@ public class GFG_DP {
 		// System.out.println(LongestCommonSubstringTabulated("forgeeksskeegfor",
 		// "rofgeeksskeegrof"));
 		// LongestOddEvenSubsequence(new int[] { 5, 6, 9, 4, 7, 8 });
-		System.out.println(mcm(new int[] { 40, 20, 30, 10, 30 }, 0, 4, new int[][] { {} }));
+		// System.out.println(mcm(new int[] { 40, 20, 30, 10, 30 }, 0, 4, new
+		// int[][] { {} }));
+		// String s = "ababbbabbababa";
+		// System.out.println(PalindromePartitioning(s, 0, s.length() - 1));
+		//System.out.println(UnboundedKnapsack(new int[] { 1, 3, 4, 5 }, new int[] { 10, 40, 50, 70 }, 8, 0, " "));
+		// System.out.println(zero_oneKnapsackTabulated(new int[] { 10, 20, 30
+		// }, new int[] { 60, 100, 120 }, 50));
+		// zero_oneKnapsack(7, new int[] { 2, 5, 1, 3, 4 }, new int[] { 15, 14,
+		// 10, 45, 30 }, 0, 0, "", 0);
+		// System.out.println( zero_oneKnapsackRecursive(7, new int[] { 2, 5, 1,
+		// 3, 4 }, new int[] { 15, 14, 10, 45, 30 }, 0));
+		// System.out.println(CountSubsetsGivenSum(new int[] { 1, 1, 1, 1 }, 1,
+		// 3));
+		// System.out.println(CountSubsetsGivenSumTabulated(new int[] { 2, 3, 5,
+		// 6, 8, 10 }, 10));
+		System.out.println(DiceThrow(3, 4, 5, ""));
 
 	}
 
@@ -246,6 +261,33 @@ public class GFG_DP {
 	}
 
 	// 11.Subset Sum Problem tabulated
+	private static boolean subSetTargetTabulated(int[] arr, int target) {
+		boolean[][] res = new boolean[arr.length + 1][target + 1];
+		for (int i = 0; i < res.length; i++) {
+			for (int j = 0; j < res[i].length; j++) {
+				if (i == 0 && j == 0) {
+					res[i][j] = true;
+				} else if (i == 0) {
+					res[i][j] = false;
+
+				} else if (j == 0) {
+					res[i][j] = true;
+				} else {
+					if (j >= arr[i - 1]) {
+						res[i][j] = res[i - 1][j - arr[i - 1]] || res[i - 1][j];
+					} else {
+						res[i][j] = res[i - 1][j];
+					}
+				}
+			}
+		}
+		for (int i = 0; i < res.length; i++) {
+			System.out.println(Arrays.toString(res[i]));
+		}
+		return res[arr.length][target];
+
+	}
+
 	// 12.
 	// 13.
 	// 14.
@@ -993,12 +1035,11 @@ public class GFG_DP {
 	// 5.Rencontres Number
 	// 6.Jacobsthal and Jacobsthal-Lucas numbers
 	// 7.
-	// 8.Floyd Warshall Algorithm
-	// 9.Bellman–Ford Algorithm
-	// 10.
-	// 10. 0/1 knapsack problem recursive
-	private static void zero_oneKnapsackRecursive(int W, int[] weights, int[] profits, int w, int profit, String asf,
-			int vidx) {
+	// 8.Floyd Warshall Algorithm Graph Algo
+	// 9.Bellman–Ford Algorithm Graph Algo
+
+	// 10. 0/1 knapsack problem
+	private static void zero_oneKnapsack(int W, int[] weights, int[] profits, int w, int profit, String asf, int vidx) {
 		if (vidx == profits.length) {
 			if (w == W) {
 				if (max < profit) {
@@ -1010,12 +1051,92 @@ public class GFG_DP {
 
 			return;
 		}
-		zero_oneKnapsackRecursive(W, weights, profits, w + weights[vidx], profit + profits[vidx],
+		zero_oneKnapsack(W, weights, profits, w + weights[vidx], profit + profits[vidx],
 				asf + "W->" + weights[vidx] + " " + "P->" + profits[vidx] + " ", vidx + 1);
-		zero_oneKnapsackRecursive(W, weights, profits, w, profit, asf, vidx + 1);
+		zero_oneKnapsack(W, weights, profits, w, profit, asf, vidx + 1);
+	}
+
+	// 10. 0/1 knapsack problem recursive
+	private static int zero_oneKnapsackRecursive(int W, int[] weights, int[] profits, int vidx) {
+		// if (vidx == profits.length - 1 && W == 0) {
+		// return 0;
+		// }
+		if (vidx >= profits.length || W < 0) {
+			return 0;
+		}
+		if (weights[vidx] <= W) {
+			return Math.max(profits[vidx] + zero_oneKnapsackRecursive(W - weights[vidx], weights, profits, vidx + 1),
+					zero_oneKnapsackRecursive(W, weights, profits, vidx + 1));
+		} else
+			return zero_oneKnapsackRecursive(W, weights, profits, vidx + 1);
 	}
 
 	// 10. 0/1 knapsack problem tabulated
+	private static int zero_oneKnapsackTabulated(int[] weights, int[] profits, int W) {
+		int[][] res = new int[weights.length + 1][W + 1];
+		for (int i = 0; i < res.length; i++) {
+			for (int j = 0; j < res[i].length; j++) {
+				if (j == 0 || i == 0) {
+					res[i][j] = 0;
+				} else if (weights[i - 1] <= j) {
+					res[i][j] = Math.max(profits[i - 1] + res[i - 1][j - weights[i - 1]], res[i - 1][j]);
+				} else {
+					res[i][j] = res[i - 1][j];
+				}
+			}
+		}
+		return res[weights.length][W];
+
+	}
+
+	// 12. Unbounded Knapsack (Repetition of items allowed)
+	private static int UnboundedKnapsack(int[] weights, int[] profits, int W, int vidx, String asf) {
+		// FOUND NEW APPROACH !
+		// if (li >= profits.length || W < 0) {
+		// return 0;
+		// }
+		// int res = 0;
+		// for (int i = li; i < profits.length; i++) {
+		// int include = profits[i] + UnboundedKnapsack(weights, profits, W -
+		// weights[i], i + 1);
+		// int exclude = UnboundedKnapsack(weights, profits, W, i + 1);
+		// res = Math.max(include, exclude);
+		// }
+		// return res;
+		if (W == 0) {
+			count++;
+			System.out.println(count + ". " + asf);
+			return 0;
+		}
+		if (vidx >= profits.length || W < 0) {
+			return 0;
+		}
+		if (weights[vidx] <= W) {
+			return Math.max(
+					profits[vidx] + UnboundedKnapsack(weights, profits, W - weights[vidx], vidx,
+							asf + weights[vidx] + "->" + profits[vidx] + " "),
+					UnboundedKnapsack(weights, profits, W, vidx + 1, asf));
+		} else
+			return UnboundedKnapsack(weights, profits, W, vidx + 1, asf);
+	}
+
+	// 15.Dice Throw
+	private static int DiceThrow(int n, int m, int x, String asf) {
+		int res = 0;
+		if (n == 0) {
+			if (x == 0) {
+				System.out.println(asf);
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		for (int i = 1; i <= m; i++) {
+			res += DiceThrow(n - 1, m, x - i, asf + i);
+		}
+		return res;
+	}
+
 	// 20.Highway Billboard Problem tabulated
 	private static int HighwayBillboard(int[] miles, int[] revenue, int t, int mile) {
 		String[] path = new String[miles.length];
@@ -1045,7 +1166,7 @@ public class GFG_DP {
 
 	// 22.Partition problem recursive
 	private static boolean PartitionProblem(int[] arr, int vidx, int sum) {
-		if (sum == 0 && vidx == arr.length - 1) {
+		if (sum == 0) {
 			return true;
 		}
 		if (sum < 0 || vidx >= arr.length) {
@@ -1054,7 +1175,64 @@ public class GFG_DP {
 		return PartitionProblem(arr, vidx + 1, sum - arr[vidx]) || PartitionProblem(arr, vidx + 1, sum);
 	}
 
-	// 22.Partition problem recursive
+	// 22.Partition problem tabulated
+	private static boolean PartitionProblemTabulated(int[] arr, int sum) {
+		boolean[][] res = new boolean[arr.length + 1][sum + 1];
+		for (int i = 0; i < res.length; i++) {
+			for (int j = 0; j < res[i].length; j++) {
+				if (i == 0 && j == 0) {
+					res[i][j] = true;
+				} else if (i == 0) {
+					res[i][j] = false;
+				} else if (j == 0) {
+					res[i][j] = true;
+				} else {
+					if (j >= arr[i - 1]) {
+						res[i][j] = res[i - 1][j - arr[i - 1]] || res[i - 1][j];
+					} else {
+						res[i][j] = res[i - 1][j];
+					}
+				}
+			}
+		}
+		return res[arr.length][sum];
+	}
+
+	// Count of subsets with sum equal to X recursion
+	private static int CountSubsetsGivenSum(int[] arr, int sum, int vidx) {
+		if (vidx == -1) {
+			if (sum == 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		return CountSubsetsGivenSum(arr, sum - arr[vidx], vidx - 1) + CountSubsetsGivenSum(arr, sum, vidx - 1);
+	}
+
+	// Count of subsets with sum equal to X tabulated
+	private static int CountSubsetsGivenSumTabulated(int[] arr, int sum) {
+		int[][] res = new int[arr.length + 1][sum + 1];
+		for (int i = 0; i < res.length; i++) {
+			for (int j = 0; j < res[i].length; j++) {
+				if (i == 0 && j == 0) {
+					res[i][j] = 1;
+				} else if (i == 0) {
+					res[i][j] = 0;
+				} else if (j == 0) {
+					res[i][j] = 1;
+				} else {
+					if (j >= arr[i - 1]) {
+						res[i][j] = res[i - 1][j - arr[i - 1]] + res[i - 1][j];
+					} else {
+						res[i][j] = res[i - 1][j];
+					}
+				}
+			}
+		}
+		return res[arr.length][sum];
+	}
+
 	// 29.Longest Palindromic Subsequence
 	// 141.Find length of longest subsequence of one string which is substring
 	// of another string
@@ -1113,8 +1291,60 @@ public class GFG_DP {
 		System.out.println(Arrays.toString(res));
 		System.out.println(Arrays.toString(path));
 	}
+	// 179.Partition a set into two subsets such that the difference of subset
+	// sums is minimum
 
 	// HARD
+	// 1. Palindrome Partitioning
+	private static int PalindromePartitioning(String s, int i, int j) {
+		if (isPlalindrome(s, i, j)) {
+			return 0;
+		}
+		int ans = Integer.MAX_VALUE;
+		for (int k = i; k < j; k++) {
+			int l = PalindromePartitioning(s, i, k);
+			int r = PalindromePartitioning(s, k + 1, j);
+			int tc = l + r + 1;
+			ans = Math.min(tc, ans);
+		}
+		return ans;
+	}
+
+	private static boolean isPlalindrome(String s, int i, int j) {
+		int l = i;
+		int r = j;
+		while (l < r) {
+			if (s.charAt(l) != s.charAt(r)) {
+				return false;
+			}
+			l++;
+			r--;
+		}
+		return true;
+	}
+
+	// 5.Boolean Parenthesization Problem
+	// private static int BooleanParenthesization(String s, int i, int j,
+	// boolean isTrue) {
+	// int ways=0;
+	// for (int k = i; k < j; k = k + 2) {
+	// int lt = BooleanParenthesization(s, i, k - 1, true);
+	// int rt = BooleanParenthesization(s, k + 1, j, true);
+	// int lf = BooleanParenthesization(s, i, k - 1, false);
+	// int rf = BooleanParenthesization(s, k + 1, j, false);
+	// if (s.charAt(k) == '|') {
+	// ways=lt*rt + lf*rt + lt*rf;
+	// }
+	// if (s.charAt(k) == '^') {
+	//
+	// }
+	// if (s.charAt(k) == '&') {
+	//
+	// }
+	//
+	// }
+	// }
+
 	// 8.Matrix Chain Multiplication
 	private static int mcm(int[] arr, int i, int j, int[][] qb) {
 		if (j - i == 1) {

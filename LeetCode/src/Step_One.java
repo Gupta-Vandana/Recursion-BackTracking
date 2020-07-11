@@ -1,11 +1,3 @@
-import java.util.Arrays;
-import java.util.Scanner;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Step_One {
 
@@ -13,9 +5,13 @@ public class Step_One {
 		// Combinations(new int[] { 1, 2, 3, 4 }, 2, " ", -1);
 		// digitBinary(4, "");
 		// DigitGivenNumbers(3, 6, 0, "");
-		// f(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, 6, 0, 0, "");
+		// System.out.println(f(new int[] { 1, 2, 3, 4, 5, 6 }, 6, 0, ""));
+		// count = 0;
+		// System.out.println(fotherWay(6, " ", 0));
+		// count = 0;
+		// fNaive(new int[] { 1, 2, 3, 4, 5, 6 }, 6, 0, 0, "");
 		// stringPartitioning("abcde");
-		subsequences("AABEBCDD", "");
+		// subsequences("AABEBCDD", "");
 	}
 
 	// YAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY!!!!!!!!!!!!!!!!!!!
@@ -81,18 +77,54 @@ public class Step_One {
 	}
 
 	// print all the combinations equal to target of any length
-	public static void f(int[] arr, int target, int vidx, int ssf, String sssf) {
-		if (vidx == arr.length) {
-			if (ssf == target) {
-				System.out.println(sssf);
-			}
+	// writing DP code is easy
+	public static int f(int[] arr, int target, int vidx, String sssf) {
+		if (target == 0) {
+			count++;
+			System.out.println(count + ". " + sssf);
+			return 1;
+		}
+		if (vidx >= arr.length || target < 0) {
+			return 0;
+		}
+
+		return f(arr, target - arr[vidx], vidx + 1, sssf + " " + arr[vidx]) + f(arr, target, vidx + 1, sssf);
+	}
+
+	// print all the combinations equal to target of any length
+	public static void fNaive(int[] arr, int target, int vidx, int ssf, String sssf) {
+		if (ssf == target) {
+			System.out.println(sssf);
 			return;
 		}
 
-		f(arr, target, vidx + 1, ssf + arr[vidx], sssf + " " + arr[vidx]);
-		f(arr, target, vidx + 1, ssf, sssf);
+		if (vidx >= arr.length) {
+			return;
+		}
+
+		fNaive(arr, target, vidx + 1, ssf + arr[vidx], sssf + " " + arr[vidx]);
+		fNaive(arr, target, vidx + 1, ssf, sssf);
 	}
 
+	// same function with diff approach
+	// writing DP code is difficult
+	private static int fotherWay(int n, String asf, int li) {
+		int res = 0;
+		if (n == 0) {
+			count++;
+			System.out.println(count + ". " + asf);
+			return 1;
+		}
+		if (n < 0) {
+			return 0;
+		}
+		for (int i = li + 1; i <= n; i++) {
+			res = res + fotherWay(n - i, asf + i + " ", i);
+		}
+		return res;
+	}
+
+	
 	// Combinations of given length eg {1,2,3} k =2 {1,2}{1,3}{2,3}
 	public static void Combinations(int[] arr, int k, String asf, int lb) {
 		if (k == 0) {
