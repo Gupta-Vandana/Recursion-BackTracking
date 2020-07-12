@@ -105,7 +105,8 @@ public class GFG_DP {
 		// 3));
 		// System.out.println(CountSubsetsGivenSumTabulated(new int[] { 2, 3, 5,
 		// 6, 8, 10 }, 10));
-		System.out.println(DiceThrow(3, 4, 5, ""));
+		// System.out.println(DiceThrow(3, 4, 5, ""));
+		// System.out.println(TileStackingRecursive(3, 3, 1, "", 1));
 
 	}
 
@@ -622,7 +623,7 @@ public class GFG_DP {
 
 	}
 
-	// 73.Longest Common Substring recursive
+	// 73.Longest Common Substring tabulated
 	private static int LongestCommonSubstringTabulated(String a, String b) {
 		int[][] res = new int[a.length() + 1][b.length() + 1];
 		for (int i = 0; i < res.length; i++) {
@@ -894,8 +895,8 @@ public class GFG_DP {
 		System.out.println(Arrays.toString(res));
 		return res[n];
 	}
-	// 93.Largest Sum Contiguous Subarray
 
+	// 93.Largest Sum Contiguous Subarray
 	// 99.Ways to sum to N using array elements with repetition allowed
 	// recursive
 	private static int waysToSumNArrElements(int n, int[] arr, String asf) {
@@ -1139,6 +1140,25 @@ public class GFG_DP {
 	}
 
 	// 15.Dice Throw tabulated
+	// 18.Tile Stacking Problem recursive
+	// wrong
+	private static int TileStackingRecursive(int n, int m, int li, String asf, int k) {
+		int res = 0;
+		if (n == 0) {
+			System.out.println(asf);
+			return 1;
+		}
+		if (n < 0) {
+			return 0;
+		}
+		for (int i = li; i <= m; i++) {
+			if (k > 0)
+				res += TileStackingRecursive(n - 1, m, i, asf + i, k - 1);
+		}
+
+		return res;
+	}
+
 	// 20.Highway Billboard Problem tabulated
 	private static int HighwayBillboard(int[] miles, int[] revenue, int t, int mile) {
 		String[] path = new String[miles.length];
@@ -1236,11 +1256,7 @@ public class GFG_DP {
 	}
 
 	// 29.Longest Palindromic Subsequence
-	// 141.Find length of longest subsequence of one string which is substring
-	// of another string
-	// f(i + 1, j) = max(f(i + 1, j), f(i, j)) //skip this character in X
-	// if X[i] == Y[j] //add this character to current answer
-	// f(i + 1, j + 1) = max(f(i + 1, j + 1), f(i, j) + 1)
+	// 32.Count All Palindromic Subsequence in a given String
 	// 38.Maximum sum alternating subsequence
 	// NOT DONE
 	private static int maxSumAlternatingSubsequence(int[] arr) {
@@ -1293,6 +1309,13 @@ public class GFG_DP {
 		System.out.println(Arrays.toString(res));
 		System.out.println(Arrays.toString(path));
 	}
+	// 141.Find length of longest subsequence of one string which is substring
+	// of another string
+
+	// f(i + 1, j) = max(f(i + 1, j), f(i, j)) //skip this character in X
+	// if X[i] == Y[j] //add this character to current answer
+	// f(i + 1, j + 1) = max(f(i + 1, j + 1), f(i, j) + 1)
+
 	// 179.Partition a set into two subsets such that the difference of subset
 	// sums is minimum
 
