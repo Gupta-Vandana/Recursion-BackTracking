@@ -31,7 +31,7 @@ public class GFG_DP {
 		// "babba"));
 		// System.out.println(longestCommonSubsequenceTabulated("AGGTAB",
 		// "ABCDGH"));
-		// maxSumIncreasingSubsequence(new int[] { 10, 4, 5, 3 });
+		// maxSumIncreasingSubsequence(new int[] {3, 2, 6, 4, 5, 1 });
 		// maxProductIncreasing(new int[] { 10, 22, 9, 33, 21, 50, 41, 60 });
 		// System.out.println(subsequencesProductLessThanK(new int[] { 1, 2, 3,
 		// 4 }, 10, 0, 1));
@@ -107,6 +107,11 @@ public class GFG_DP {
 		// 6, 8, 10 }, 10));
 		// System.out.println(DiceThrow(3, 4, 5, ""));
 		// System.out.println(TileStackingRecursive(3, 3, 1, "", 1));
+		// longestIncreasingConsecutive(new int[] { 6, 7, 8, 3, 4, 5, 9, 10 });
+		String a = "banana";
+		String b = "ban";
+		System.out.println(aOccursSubsequenceInb(a, b));
+		System.out.println(aOccursSubsequenceInbTabulated(a, b));
 
 	}
 
@@ -376,8 +381,7 @@ public class GFG_DP {
 		if (a.length() == 0 || b.length() == 0) {
 			return 0;
 		}
-		int i = 0;
-		if (a.charAt(i) == b.charAt(i)) {
+		if (a.charAt(0) == b.charAt(0)) {
 			return 1 + longestCommonSubsequenceRecursive(a.substring(1), b.substring(1));
 		} else {
 			return Math.max(longestCommonSubsequenceRecursive(a.substring(1), b),
@@ -1286,8 +1290,56 @@ public class GFG_DP {
 		}
 		return max;
 	}
+	// 40.Shortest Uncommon Subsequence
+
+	// 42.Given a string, find the count of distinct subsequences of it.
+	private void distinctSubsequences() {
+		// TODO Auto-generated method stub
+
+	}
+
+	// 43.Find number of times a string occurs as a subsequence in given string
+	// recursive
+	private static int aOccursSubsequenceInb(String a, String b) {
+		if ((a.length() == 0 && b.length() == 0) || b.length() == 0) {
+			return 1;
+		}
+		if (a.length() == 0) {
+			return 0;
+		}
+		if (a.charAt(0) == b.charAt(0)) {
+			return aOccursSubsequenceInb(a.substring(1), b.substring(1)) + aOccursSubsequenceInb(a.substring(1), b);
+		} else {
+			return aOccursSubsequenceInb(a.substring(1), b);
+		}
+
+	}
+
+	// 43.Find number of times a string occurs as a subsequence in given string
+	// tabulated
+	private static int aOccursSubsequenceInbTabulated(String a, String b) {
+		int[][] res = new int[a.length() + 1][b.length() + 1];
+		for (int i = 0; i < res.length; i++) {
+			for (int j = 0; j < res[0].length; j++) {
+				if (i == 0 && j == 0) {
+					res[i][j] = 1;
+				} else if (j == 0) {
+					res[i][j] = 1;
+				} else if (i == 0) {
+					res[i][j] = 0;
+				} else if (a.charAt(i - 1) == b.charAt(j - 1)) {
+					res[i][j] = res[i - 1][j - 1] + res[i - 1][j];
+				} else {
+					res[i][j] = res[i - 1][j];
+				}
+
+			}
+		}
+		return res[a.length()][b.length()];
+	}
 
 	// 47.Printing Maximum Sum Increasing Subsequence
+	// Already did it in 38. of easy
 	// 48.Longest Increasing Odd Even Subsequence
 	private static void LongestOddEvenSubsequence(int[] arr) {
 		int[] res = new int[arr.length];
@@ -1308,6 +1360,31 @@ public class GFG_DP {
 		}
 		System.out.println(Arrays.toString(res));
 		System.out.println(Arrays.toString(path));
+	}
+
+	// 49.Count number of increasing subsequences of size k
+	// 50.Printing longest Increasing consecutive subsequence
+	private static void longestIncreasingConsecutive(int[] arr) {
+		int[] res = new int[arr.length];
+		String[] path = new String[arr.length];
+		Arrays.fill(path, "");
+		res[0] = 1;
+		path[0] = arr[0] + " ";
+		for (int i = 1; i < path.length; i++) {
+			for (int j = 0; j < i; j++) {
+				if (arr[i] - arr[j] == 1) {
+					if (res[j] > res[i]) {
+						res[i] = res[j];
+						path[i] = path[j];
+					}
+				}
+			}
+			res[i] += 1;
+			path[i] += arr[i] + " ";
+		}
+		System.out.println(Arrays.toString(res));
+		System.out.println(Arrays.toString(path));
+
 	}
 	// 141.Find length of longest subsequence of one string which is substring
 	// of another string
