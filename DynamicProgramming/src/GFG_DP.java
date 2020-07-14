@@ -108,11 +108,21 @@ public class GFG_DP {
 		// System.out.println(DiceThrow(3, 4, 5, ""));
 		// System.out.println(TileStackingRecursive(3, 3, 1, "", 1));
 		// longestIncreasingConsecutive(new int[] { 6, 7, 8, 3, 4, 5, 9, 10 });
-		String a = "banana";
-		String b = "ban";
-		System.out.println(aOccursSubsequenceInb(a, b));
-		System.out.println(aOccursSubsequenceInbTabulated(a, b));
-
+		// String a = "banana";
+		// String b = "ban";
+		// System.out.println(aOccursSubsequenceInb(a, b));
+		// System.out.println(aOccursSubsequenceInbTabulated(a, b));
+		// String a = "";
+		// String b = " ";
+		// System.out.println(a.length());
+		// System.out.println(b.length());
+		// System.out.println(NumberOfPathsKCoins(new int[][] { { 1, 2, 3 }, {
+		// 4, 6, 5 }, { 3, 2, 1 } }, 12, 0, 0, ""));
+		// System.out.println(MinCostPath(new int[][] { { 1, 2, 3 }, { 4, 8, 2
+		// }, { 1, 5, 3 } }));
+		// MinValueOfCoinsToGivenValue(new int[] { 25, 10, 5 }, 30);
+		System.out.println(MinValueOfCoinsToGivenValue(new int[] { 9, 6, 5, 1 }, 11, 0, ""));
+		System.out.println(MinValueOfCoinsToGivenValueTabulated(new int[] { 9, 6, 5, 1 }, 11));
 	}
 
 	static int count = 0;
@@ -528,7 +538,7 @@ public class GFG_DP {
 	// dyn (I k)
 	// if I == N: return 1
 	// if k >= K: return 0
-	// return dyn(I+1,k)+dyn(I+1,k*A[I])
+	// return dyn(I+1,k) + dyn(I+1,k*A[I])
 
 	// 42.Longest subsequence such that difference between adjacents is one
 	private static int longestSubAdjDiffOne(int[] arr) {
@@ -611,6 +621,26 @@ public class GFG_DP {
 
 	// 58.Maximum weight path ending at any element of last row in a matrix
 	// tabulated
+	// 65.Min Cost Path
+	private static int MinCostPath(int[][] costs) {
+		int[][] res = new int[costs.length][costs.length];
+		for (int i = costs.length - 1; i >= 0; i--) {
+			for (int j = costs[i].length - 1; j >= 0; j--) {
+				if (i == costs.length - 1 && j == costs[0].length - 1) {
+					res[i][j] = costs[i][j];
+				} else if (i == costs.length - 1) {
+					res[i][j] = costs[i][j] + res[i][j + 1];
+				} else if (j == costs[0].length - 1) {
+					res[i][j] = costs[i][j] + res[i + 1][j];
+				} else {
+					res[i][j] = costs[i][j] + Math.min(res[i + 1][j], Math.min(res[i][j + 1], res[i + 1][j + 1]));
+				}
+			}
+		}
+		return res[0][0];
+
+	}
+
 	// 66.Minimum number of jumps to reach end
 	// 73.Longest Common Substring recursive
 	private static int LongestCommonSubstring(String a, String b, int c) {
@@ -986,6 +1016,7 @@ public class GFG_DP {
 	// INTERMEDIATE
 	// 1.Lobb Number
 	// 2.Eulerian Number recursive
+
 	private static int EulerianNumber(int n, int m) {
 		if (m >= n || n == 0) {
 			return 0;
@@ -1290,8 +1321,10 @@ public class GFG_DP {
 		}
 		return max;
 	}
-	// 40.Shortest Uncommon Subsequence
 
+	// 39.Longest alternating subsequence
+	// 40.Shortest Uncommon Subsequence
+	// 41.Longest Repeating Subsequence
 	// 42.Given a string, find the count of distinct subsequences of it.
 	private void distinctSubsequences() {
 		// TODO Auto-generated method stub
@@ -1385,6 +1418,83 @@ public class GFG_DP {
 		System.out.println(Arrays.toString(res));
 		System.out.println(Arrays.toString(path));
 
+	}
+
+	// 54.Find all distinct subset (or subsequence) sums of an array
+	// NOTE -: array must not contain duplicates
+	// 63.Number of paths with exactly k coins recursive
+	private static int NumberOfPathsKCoins(int[][] matrix, int k, int i, int j, String asf) {
+		if (i == matrix.length - 1 && j == matrix[0].length - 1) {
+			if (k - matrix[i][j] == 0) {
+				System.out.println(asf);
+				return 1;
+			} else
+				return 0;
+		}
+		if (i >= matrix.length || j >= matrix[0].length) {
+			return 0;
+		}
+		return NumberOfPathsKCoins(matrix, k - matrix[i][j], i + 1, j, asf + matrix[i][j] + " ")
+				+ NumberOfPathsKCoins(matrix, k - matrix[i][j], i, j + 1, asf + matrix[i][j] + " ");
+
+	}
+
+	// 63.Number of paths with exactly k coins tabulated
+	// NOT DONE
+	// 64.Find minimum number of coins that make a given value
+	private static int MinValueOfCoinsToGivenValue(int[] arr, int target, int vidx, String asf) {
+		if (vidx == arr.length) {
+			if (target == 0) {
+				return 1;
+			}
+			return 0;
+		}
+		if (arr[vidx] <= target) {
+			return 1 + Math.min(MinValueOfCoinsToGivenValue(arr, target - arr[vidx], vidx + 1, asf),
+					(MinValueOfCoinsToGivenValue(arr, target, vidx + 1, asf)));
+		} else {
+			return MinValueOfCoinsToGivenValue(arr, target, vidx + 1, asf);
+		}
+	}
+
+	// 63.Number of paths with exactly k coins tabulated
+	private static int MinValueOfCoinsToGivenValueTabulated(int[] arr, int target) {
+		int[][] res = new int[arr.length + 1][target + 1];
+		for (int i = 0; i < res.length; i++) {
+			for (int j = 0; j < res[0].length; j++) {
+				if (i == 0 && j == 0) {
+					res[i][j] = 1;
+				} else if (i == 0) {
+					res[i][j] = 0;
+				} else if (j == 0) {
+					res[i][j] = 1;
+				} else {
+					if (arr[i - 1] <= j) {
+						res[i][j] = 1 + Math.min(res[i - 1][j - arr[i - 1]], res[i - 1][j]);
+					} else {
+						res[i][j] = res[i - 1][j];
+					}
+				}
+			}
+		}
+		return res[arr.length][target];
+	}
+
+	private static int NumberOfPathsKCoinsTabulated(int[][] matrix, int k) {
+		int[][] res = new int[matrix.length][matrix.length];
+		for (int i = matrix.length - 1; i >= 0; i--) {
+			for (int j = matrix[0].length - 1; j >= 0; j--) {
+				if (i == matrix.length - 1 && j == matrix[0].length - 1) {
+					if (k == matrix[matrix.length - 1][matrix[0].length - 1])
+						res[i][j] = 1;
+					else
+						res[i][j] = 0;
+				} else if (i == matrix.length - 1) {
+					// res[i][j]=
+				}
+			}
+		}
+		return res[0][0];
 	}
 	// 141.Find length of longest subsequence of one string which is substring
 	// of another string
