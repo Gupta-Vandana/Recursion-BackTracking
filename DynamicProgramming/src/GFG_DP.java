@@ -1457,7 +1457,7 @@ public class GFG_DP {
 		}
 	}
 
-	// 63.Number of paths with exactly k coins tabulated
+	// 64.Find minimum number of coins that make a given value tabulated
 	private static int MinValueOfCoinsToGivenValueTabulated(int[] arr, int target) {
 		int[][] res = new int[arr.length + 1][target + 1];
 		for (int i = 0; i < res.length; i++) {
@@ -1480,22 +1480,6 @@ public class GFG_DP {
 		return res[arr.length][target];
 	}
 
-	private static int NumberOfPathsKCoinsTabulated(int[][] matrix, int k) {
-		int[][] res = new int[matrix.length][matrix.length];
-		for (int i = matrix.length - 1; i >= 0; i--) {
-			for (int j = matrix[0].length - 1; j >= 0; j--) {
-				if (i == matrix.length - 1 && j == matrix[0].length - 1) {
-					if (k == matrix[matrix.length - 1][matrix[0].length - 1])
-						res[i][j] = 1;
-					else
-						res[i][j] = 0;
-				} else if (i == matrix.length - 1) {
-					// res[i][j]=
-				}
-			}
-		}
-		return res[0][0];
-	}
 	// 141.Find length of longest subsequence of one string which is substring
 	// of another string
 

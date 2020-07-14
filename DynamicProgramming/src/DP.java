@@ -18,8 +18,9 @@ public class DP {
 	// 2. implement recursive solution as well of every problem
 	public static void main(String[] args) {
 		int[][] mine = { { 1, 3, 1, 5 }, { 2, 2, 4, 1 }, { 5, 0, 2, 3 }, { 0, 6, 1, 2 } };
-		// System.out.println(minCostPathTabulated(costs));
-		//System.out.println(goldMineTabulated(mine));
+		int[][] costs = { { 1, 2, 3 }, { 4, 8, 2 }, { 1, 5, 3 } };
+		System.out.println(minCostPathTabulated(costs));
+		// System.out.println(goldMineTabulated(mine));
 		// System.out.println(countBoardPath(10));
 		// System.out.println(rodCuttingProblem(new int[] { 0, 3, 5, 6, 15, 10,
 		// 25, 12, 24 }));
@@ -34,7 +35,7 @@ public class DP {
 		// 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 0, 0 },
 		// { 1, 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 1, 0 } };
 		// System.out.println(maxSizeSquareSubMatrixTabulated(matrix));
-		 LIS_Tabulated(new int[] {2, 6, 4, 5, 7});
+		// LIS_Tabulated(new int[] {2, 6, 4, 5, 7});
 		// LBS_Tabulated(new int[] { 10, 22, 9, 33, 21, 50, 41, 60, 80, 1 });
 		// System.out.println(matrixChainMultiplication(new int[] { 10, 20, 30,
 		// 40, 50, 60 }));
@@ -71,7 +72,6 @@ public class DP {
 					result[i][j] = result[i][j + 1] + result[i + 1][j];
 				}
 			}
-
 		}
 		return result[0][0];
 	}
@@ -84,7 +84,6 @@ public class DP {
 	// min-cost-path TABULATED
 	private static int minCostPathTabulated(int[][] costs) {
 		int minCost[][] = new int[costs.length][costs.length];
-		minCost[costs.length - 1][costs.length - 1] = costs[costs.length - 1][costs.length - 1];
 		for (int i = minCost.length - 1; i >= 0; i--) {
 			for (int j = minCost.length - 1; j >= 0; j--) {
 				if (i == minCost.length - 1 && j == minCost.length - 1) {
