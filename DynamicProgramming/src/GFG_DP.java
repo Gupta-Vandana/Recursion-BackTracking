@@ -121,8 +121,17 @@ public class GFG_DP {
 		// System.out.println(MinCostPath(new int[][] { { 1, 2, 3 }, { 4, 8, 2
 		// }, { 1, 5, 3 } }));
 		// MinValueOfCoinsToGivenValue(new int[] { 25, 10, 5 }, 30);
-		System.out.println(MinValueOfCoinsToGivenValue(new int[] { 9, 6, 5, 1 }, 11, 0, ""));
-		System.out.println(MinValueOfCoinsToGivenValueTabulated(new int[] { 9, 6, 5, 1 }, 11));
+		// System.out.println(MinValueOfCoinsToGivenValue(new int[] { 9, 6, 5, 1
+		// }, 11, 0, ""));
+		// System.out.println(MinValueOfCoinsToGivenValueTabulated(new int[] {
+		// 9, 6, 5, 1 }, 11));
+		// ProbabilityLeastKHeadsN(3, 2, "", 0, 0);
+		// System.out.println(waystoReachEnd(
+		// new int[][] { { 0, 0, 0, 0 }, { 0, -1, 0, 0 }, { -1, 0, 0, 0 }, { 0,
+		// 0, 0, 0 } }, 0, 0, ""));
+		// System.out.println(waystoReachEndTabulated(
+		// new int[][] { { 0, 0, 0, 0 }, { 0, -1, 0, 0 }, { -1, 0, 0, 0 }, { 0,
+		// 0, 0, 0 } }));
 	}
 
 	static int count = 0;
@@ -1479,6 +1488,69 @@ public class GFG_DP {
 		}
 		return res[arr.length][target];
 	}
+
+	// 65.Collect maximum coins before hitting a dead end recursive
+	// 67.Probability of getting at least K heads in N tosses of Coins
+	// not done
+	private static void ProbabilityLeastKHeadsN(int noOfCall, int k, String asf, int nofOfHeads, int count) {
+		if (noOfCall == 0) {
+			System.out.println(asf + " " + nofOfHeads);
+			return;
+		}
+		ProbabilityLeastKHeadsN(noOfCall - 1, k, asf + "T" + " ", nofOfHeads, count);
+		ProbabilityLeastKHeadsN(noOfCall - 1, k, asf + "H" + " ", nofOfHeads + 1, count);
+
+	}
+
+	// 72.Count number of ways to reach destination in a Maze
+	private static int waystoReachEnd(int[][] maze, int i, int j, String asf) {
+		if (i == maze.length - 1 && j == maze[0].length - 1) {
+			System.out.println(asf);
+			return 1;
+		}
+		if (i >= maze.length || j >= maze[0].length) {
+			return 0;
+		}
+		if (maze[i][j] != -1) {
+			return waystoReachEnd(maze, i + 1, j, asf + "i" + i + "j" + j + " ")
+					+ waystoReachEnd(maze, i, j + 1, asf + "i" + i + "j" + j + " ");
+		} else {
+			return 0;
+		}
+	}
+
+	// 72.Count number of ways to reach destination in a Maze tabulated
+	private static int waystoReachEndTabulated(int[][] maze) {
+		int[][] res = new int[maze.length][maze[0].length];
+		for (int i = res.length - 1; i >= 0; i--) {
+			for (int j = res[0].length - 1; j >= 0; j--) {
+				if (i == res.length - 1 && j == res[0].length - 1) {
+					res[i][j] = 1;
+				} else if (i == maze.length - 1) {
+					if (maze[i][j] != -1) {
+						res[i][j] = res[i][j + 1];
+					} else {
+						res[i][j] = 0;
+					}
+				} else if (j == maze[0].length - 1) {
+					if (maze[i][j] != -1) {
+						res[i][j] = res[i + 1][j];
+					} else {
+						res[i][j] = 0;
+					}
+				} else {
+					if (maze[i][j] != -1) {
+						res[i][j] = res[i + 1][j] + res[i][j + 1];
+					} else {
+						res[i][j] = 0;
+					}
+				}
+			}
+		}
+		return res[0][0];
+	}
+
+	// 73.Count all triplets whose sum is equal to a perfect cube
 
 	// 141.Find length of longest subsequence of one string which is substring
 	// of another string
