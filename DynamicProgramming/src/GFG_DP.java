@@ -84,8 +84,7 @@ public class GFG_DP {
 		// new int[] { 5, 6, 5, 3, 1 }, 5, 20));
 		// System.out.println(PartitionProblem(new int[] { 3, 1, 5, 9, 12 }, 0,
 		// 15));
-		// System.out.println(LongestCommonSubstring("forgeeksskeegfor",
-		// "rofgeeksskeegrof", 0));
+		// System.out.println(LongestCommonSubstring("abcda", "adcba", 0));
 		// System.out.println(LongestCommonSubstringTabulated("forgeeksskeegfor",
 		// "rofgeeksskeegrof"));
 		// LongestOddEvenSubsequence(new int[] { 5, 6, 9, 4, 7, 8 });
@@ -132,6 +131,11 @@ public class GFG_DP {
 		// System.out.println(waystoReachEndTabulated(
 		// new int[][] { { 0, 0, 0, 0 }, { 0, -1, 0, 0 }, { -1, 0, 0, 0 }, { 0,
 		// 0, 0, 0 } }));
+		// binaryStringsWithoutConsecutive1s(2, "", false);
+		// System.out.println(PaperCutIntoMinimumNumberOfSquares(4, 5));
+		// System.out.println(MinimumInsertionsToFormAPalindrome("abcda"));
+		System.out.println(MinimumJumpsToReachLastBuildingInAMatrix(
+				new int[][] { { 5, 4, 2 }, { 9, 2, 1 }, { 2, 5, 9 }, { 1, 3, 11 } }, 0, 0,""));
 	}
 
 	static int count = 0;
@@ -1551,7 +1555,72 @@ public class GFG_DP {
 	}
 
 	// 73.Count all triplets whose sum is equal to a perfect cube
+	// 74.Count number of binary strings without consecutive 1’s
+	private static void binaryStringsWithoutConsecutive1s(int n, String asf, boolean isOne) {
+		if (n == 0) {
+			System.out.println(asf);
+			return;
+		}
+		if (isOne == false) {
+			binaryStringsWithoutConsecutive1s(n - 1, asf + "1", true);
+		}
+		binaryStringsWithoutConsecutive1s(n - 1, asf + "0", false);
+	}
 
+	// 111.Minimum Cost To Make Two Strings Identical
+	private static int MinimumCostToMakeTwoStringsIdentical(String a, String b, int costa, int costb) {
+		int lcs = longestCommonSubsequenceRecursive(a, b);
+		int sumCosta = a.length() - lcs;
+		int sumCostb = b.length() - lcs;
+		return sumCosta * costa + sumCostb * costb;
+
+	}
+
+	// 112.Paper Cut into Minimum Number of Squares
+	// NOT DONE
+	private static int PaperCutIntoMinimumNumberOfSquares(int l, int b) {
+		if (l == b) {
+			return 1;
+		}
+		// if (l < 0 || b < 0) {
+		// return 0;
+		// }
+		return Math.min(PaperCutIntoMinimumNumberOfSquares(l - 1, b), PaperCutIntoMinimumNumberOfSquares(l, b - 1));
+	}
+
+	// 114.Minimum insertions to form a palindrome
+	private static int MinimumInsertionsToFormAPalindrome(String s) {
+		StringBuilder sb = new StringBuilder(s);
+		int lcss = longestCommonSubsequenceRecursive(s, sb.reverse().toString());
+		if (lcss == s.length())
+			return 0;
+		else
+			return s.length() - lcss;
+
+	}
+
+	// 115.Minimum number of deletions to make a string palindrome
+	// SAME AS ABOVE
+	// 116.Minimum number of deletions to make a string palindrome | Set 2
+	// 117.Minimum jumps to reach last building in a matrix
+	private static int MinimumJumpsToReachLastBuildingInAMatrix(int[][] matrix, int i, int j, String asf) {
+		if (i == matrix.length - 1 && j == matrix[0].length - 1) {
+			System.out.println(asf);
+			return matrix[i][j];
+		}
+		if (i >= matrix.length || j >= matrix[0].length) {
+			return 0;
+
+		}
+		return Math.min(
+				Math.abs(matrix[i][j]
+						- MinimumJumpsToReachLastBuildingInAMatrix(matrix, i + 1, j, asf + matrix[i][j] + " ")),
+				Math.min(
+						Math.abs(matrix[i][j]
+								- MinimumJumpsToReachLastBuildingInAMatrix(matrix, i, j + 1, asf + matrix[i][j] + " ")),
+						Math.abs(matrix[i][j] - MinimumJumpsToReachLastBuildingInAMatrix(matrix, i + 1, j + 1,
+								asf + matrix[i][j] + " "))));
+	}
 	// 141.Find length of longest subsequence of one string which is substring
 	// of another string
 

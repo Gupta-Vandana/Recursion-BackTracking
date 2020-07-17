@@ -23,11 +23,11 @@ public class Step_Two {
 		// }
 		// steps(5, "");
 		// System.out.println("~~~~~~~~~");
-		 PrintNnCombo(4, "");
-		 System.out.println("~~~~~~~~~");
-		 PrintNnComboB(4, "", 1);
-		 System.out.println("~~~~~~~~~");
-		 PrintNnComboC(4, "", 0);
+//		 PrintNnCombo(4, "");
+//		 System.out.println("~~~~~~~~~");
+//		 PrintNnComboB(4, "", 1);
+//		 System.out.println("~~~~~~~~~");
+//		 PrintNnComboC(4, "", 0);
 		// System.out.println("~~~~~~~~~");
 		//combinationSum1(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new ArrayList<>(), -1);
 		// Arrays.toString(result.toArray());
@@ -50,7 +50,7 @@ public class Step_Two {
 		// subsequencesOfArray(new int[] { 1, 2, 3, 4 }, 0, " ");
 		// kpc("263", "");
 		// BoardPath(10, "", 0);
-		// MazePath(new int[3][3], 2, 2, "_");
+		 MazePath(new int[3][3], 0, 0, "_");
 		// MazePathMultiMoves(new int[5][5], 0, 0, "");
 
 	}
