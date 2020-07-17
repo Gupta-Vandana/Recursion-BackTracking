@@ -135,7 +135,7 @@ public class GFG_DP {
 		// System.out.println(PaperCutIntoMinimumNumberOfSquares(4, 5));
 		// System.out.println(MinimumInsertionsToFormAPalindrome("abcda"));
 		System.out.println(MinimumJumpsToReachLastBuildingInAMatrix(
-				new int[][] { { 5, 4, 2 }, { 9, 2, 1 }, { 2, 5, 9 }, { 1, 3, 11 } }, 0, 0,""));
+				new int[][] { { 5, 4, 2 }, { 9, 2, 1 }, { 2, 5, 9 }, { 1, 3, 11 } }, 0, 0, ""));
 	}
 
 	static int count = 0;
@@ -1603,6 +1603,12 @@ public class GFG_DP {
 	// SAME AS ABOVE
 	// 116.Minimum number of deletions to make a string palindrome | Set 2
 	// 117.Minimum jumps to reach last building in a matrix
+	// NOT DONE
+	// 119.Minimum number of deletions to make a sorted sequence
+	private void MinimumNumberOfDeletionsToMakeASortedSequence(int[] arr) {
+		// return arr.length-LIS(arr);
+	}
+
 	private static int MinimumJumpsToReachLastBuildingInAMatrix(int[][] matrix, int i, int j, String asf) {
 		if (i == matrix.length - 1 && j == matrix[0].length - 1) {
 			System.out.println(asf);
@@ -1612,6 +1618,13 @@ public class GFG_DP {
 			return 0;
 
 		}
+		int left = Math.abs(
+				matrix[i][j] - MinimumJumpsToReachLastBuildingInAMatrix(matrix, i, j + 1, asf + matrix[i][j] + " "));
+		int down = Math.abs(
+				matrix[i][j] - MinimumJumpsToReachLastBuildingInAMatrix(matrix, i + 1, j, asf + matrix[i][j] + " "));
+		int diagonal = Math.abs(matrix[i][j]
+				- MinimumJumpsToReachLastBuildingInAMatrix(matrix, i + 1, j + 1, asf + matrix[i][j] + " "));
+
 		return Math.min(
 				Math.abs(matrix[i][j]
 						- MinimumJumpsToReachLastBuildingInAMatrix(matrix, i + 1, j, asf + matrix[i][j] + " ")),
