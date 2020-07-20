@@ -23,19 +23,22 @@ public class Step_Two {
 		// }
 		// steps(5, "");
 		// System.out.println("~~~~~~~~~");
-//		 PrintNnCombo(4, "");
-//		 System.out.println("~~~~~~~~~");
-//		 PrintNnComboB(4, "", 1);
-//		 System.out.println("~~~~~~~~~");
-//		 PrintNnComboC(4, "", 0);
+		// PrintNnCombo(4, "");
 		// System.out.println("~~~~~~~~~");
-		//combinationSum1(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new ArrayList<>(), -1);
+		// PrintNnComboB(4, "", 1);
+		// System.out.println("~~~~~~~~~");
+		// PrintNnComboC(4, "", 0);
+		// System.out.println("~~~~~~~~~");
+		// combinationSum1(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new
+		// ArrayList<>(), -1);
 		// Arrays.toString(result.toArray());
 		// System.out.println("~~~~~~~~~");
-		//combinationSum2(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new ArrayList<>(), 0);
+		// combinationSum2(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new
+		// ArrayList<>(), 0);
 		// Arrays.toString(result.toArray());
 		// System.out.println("~~~~~~~~~");
-		//combinationSum3(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new ArrayList<>());
+		// combinationSum3(new int[] { -1, 0, 1, 2, 3 }, 3, 0, new
+		// ArrayList<>());
 		// Arrays.toString(result.toArray());
 		// combination1(new int[] { 1, 2, 3, 4 }, 3, new ArrayList<>());
 		// Arrays.toString(result.toArray());
@@ -50,12 +53,16 @@ public class Step_Two {
 		// subsequencesOfArray(new int[] { 1, 2, 3, 4 }, 0, " ");
 		// kpc("263", "");
 		// BoardPath(10, "", 0);
-		 MazePath(new int[3][3], 0, 0, "_");
+		// MazePath(new int[3][3], 0, 0, "_");
 		// MazePathMultiMoves(new int[5][5], 0, 0, "");
 
 	}
 
 	static int count;
+	static List<List<Integer>> result = new ArrayList<List<Integer>>();
+	static List<List<Integer>> ans = new ArrayList<>();
+	static int max = Integer.MIN_VALUE;
+	static int maxLength = Integer.MAX_VALUE;
 
 	private static void kpc(String s, String asf) {
 		if (s.length() == 0) {
@@ -85,8 +92,6 @@ public class Step_Two {
 	// find the minimal length of a contiguous subarray of which the sum ≥ s.
 	// If there isn't one, return 0 instead.
 
-	static int maxLength = Integer.MAX_VALUE;
-
 	private static void subSetOfArray(int[] arr, int vidx, String asf, int target) {
 		if (vidx >= arr.length) {
 			return;
@@ -106,9 +111,6 @@ public class Step_Two {
 		}
 		subSetOfArray(arr, vidx + 1, "", target);
 	}
-
-	static List<List<Integer>> result = new ArrayList<List<Integer>>();
-	static List<List<Integer>> ans = new ArrayList<>();
 
 	// for unique elements in array
 	public static void combinationSum1(int[] arr, int noOfcall, int ssf, List<Integer> set, int li) {
@@ -223,8 +225,6 @@ public class Step_Two {
 		}
 
 	}
-
-	static int max = Integer.MIN_VALUE;
 
 	// no unique combination && no unique element
 	private static void PrintNnCombo(int n, String asf) {

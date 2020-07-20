@@ -10,8 +10,8 @@ public class GFG_DP {
 		// System.out.println(binomialCoefficientTabulization(12, 10));
 		// System.out.println(permutationCoefficientRecursive(10, 3));
 		// System.out.println(permutationCoefficientTabulaization(8, 3));
-		// tilingProblemRecursive(3, 2, "");
-		// tilingProblemTabulated(3, 2);
+		// tilingProblemRecursive(4, 4, "");
+		// tilingProblemTabulated(4, 4);
 		// System.out.println(subSetTargetRecursive(new int[] { 3, 34, 4, 12, 5,
 		// 2 }, 9, 5));
 		// System.out.println(subSetTargetTabulated(new int[] { 3, 34, 4, 12, 5,
@@ -71,7 +71,7 @@ public class GFG_DP {
 		// 0));
 		// System.out.println(noOfWaysToScoreTabulated(13, new int[] { 3, 5, 10
 		// }));
-		// System.out.println(waysToReachStair(4));
+		// System.out.println(waysToReachStair(4, ""));
 		// System.out.println(balancedBinaryTrees(4));
 		// System.out.println(balancedBinaryTreesTabulated(4));
 		// System.out.println(countingpairs(3));
@@ -123,7 +123,7 @@ public class GFG_DP {
 		// System.out.println(MinValueOfCoinsToGivenValue(new int[] { 9, 6, 5, 1
 		// }, 11, 0, ""));
 		// System.out.println(MinValueOfCoinsToGivenValueTabulated(new int[] {
-		// 9, 6, 5, 1 }, 11));
+		// 9, 6, 5, 1 }, 11));/
 		// ProbabilityLeastKHeadsN(3, 2, "", 0, 0);
 		// System.out.println(waystoReachEnd(
 		// new int[][] { { 0, 0, 0, 0 }, { 0, -1, 0, 0 }, { -1, 0, 0, 0 }, { 0,
@@ -134,8 +134,16 @@ public class GFG_DP {
 		// binaryStringsWithoutConsecutive1s(2, "", false);
 		// System.out.println(PaperCutIntoMinimumNumberOfSquares(4, 5));
 		// System.out.println(MinimumInsertionsToFormAPalindrome("abcda"));
-		System.out.println(MinimumJumpsToReachLastBuildingInAMatrix(
-				new int[][] { { 5, 4, 2 }, { 9, 2, 1 }, { 2, 5, 9 }, { 1, 3, 11 } }, 0, 0, ""));
+		// System.out.println(MinimumJumpsToReachLastBuildingInAMatrix( new
+		// int[][] { { 5, 4, 2 }, { 9, 2, 1 }, { 2, 5, 9 }, { 1, 3, 11 } }, 0,
+		// 0, ""));
+		// System.out.println(LongestIncreasingPathInMatrix(0, 0, new int[][] {
+		// { 1, 2, 3, 4 }, { 2, 2, 3, 4 }, { 3, 2, 3, 4 }, { 4, 5, 6, 7 } }, "
+		// "));
+		// System.out.println(CoinChange(4, new int[] { 1, 2, 3 }, 0));
+		// System.out.println(pathsFromOriginTabulated(3, 6));
+		System.out.println(SubsetWithSumDivisibleByM(new int[] { 1, 6 }, 5, 0, 0, ""));
+		System.out.println(5 % 7);
 	}
 
 	static int count = 0;
@@ -260,14 +268,18 @@ public class GFG_DP {
 	}
 
 	// 7.Tiling Problem tabulated
+	// “2 x n” board and tiles of size “2 x 1”
+	// this code is for m x n tile
 	private static void tilingProblemTabulated(int n, int m) {
 		int[] result = new int[n + 1];
 		result[0] = 0;
 		result[1] = 1;
 		for (int i = 2; i <= n; i++) {
-			if (i <= m)
-				result[i] = i;
-			else
+			if (i == m)
+				result[i] = 2;
+			else if (i < m || i == 1) {
+				result[i] = 1;
+			} else
 				result[i] = result[i - 1] + result[i - m];
 		}
 		System.out.println(Arrays.toString(result));
@@ -277,6 +289,20 @@ public class GFG_DP {
 
 	// 8.Gold mine
 	// 9.coin change
+	private static int CoinChange(int N, int[] arr, int li) {
+		int res = 0;
+		if (N == 0) {
+			return 1;
+		}
+		if (N < 0) {
+			return 0;
+		}
+		for (int i = li; i < arr.length; i++) {
+			res += CoinChange(N - arr[i], arr, i);
+		}
+		return res;
+	}
+
 	// 10.Friends Pairing Problem
 	// 11.Subset Sum Problem Recursive
 	private static boolean subSetTargetRecursive(int[] arr, int target, int vidx) {
@@ -319,7 +345,22 @@ public class GFG_DP {
 	}
 
 	// 12.
-	// 13.
+	// 13.Subset with sum divisible by m recursive
+	// NOT DONE
+	private static boolean SubsetWithSumDivisibleByM(int[] arr, int m, int vidx, int sum, String asf) {
+		if (vidx == arr.length) {
+			System.out.println(asf);
+			System.out.println(sum);
+			if (m < sum) {
+				return false;
+			} else {
+				return m / sum == 0;
+			}
+		}
+		return SubsetWithSumDivisibleByM(arr, m, vidx + 1, sum + arr[vidx], asf + arr[vidx] + " ")
+				|| SubsetWithSumDivisibleByM(arr, m, vidx + 1, sum, asf);
+	}
+
 	// 14.
 	// 15.
 	// 16.Compute nCr % p recursive
@@ -630,6 +671,10 @@ public class GFG_DP {
 
 		return Math.max(matrix[i + 1][j] + maxWeightPath(matrix, i + 1, j, asf + matrix[i + 1][j] + " "),
 				matrix[i + 1][j + 1] + maxWeightPath(matrix, i + 1, j + 1, asf + matrix[i + 1][j + 1] + " "));
+		// return matrix[i][j] + Math.max(maxWeightPath(matrix, i + 1, j, asf +
+		// matrix[i + 1][j] + " "),
+		// maxWeightPath(matrix, i + 1, j + 1, asf + matrix[i + 1][j + 1] + "
+		// "));
 	}
 
 	// 58.Maximum weight path ending at any element of last row in a matrix
@@ -748,14 +793,16 @@ public class GFG_DP {
 	}
 
 	// 81.Count ways to reach the nth stair using step 1, 2 or 3 recursive
-	private static int waysToReachStair(int n) {
+	private static int waysToReachStair(int n, String asf) {
+		System.out.println(asf);
 		if (n == 0) {
 			return 1;
 		}
 		if (n < 0) {
 			return 0;
 		}
-		return waysToReachStair(n - 1) + waysToReachStair(n - 2) + waysToReachStair(n - 3);
+		return waysToReachStair(n - 1, asf + 1 + " ") + waysToReachStair(n - 2, asf + 2 + " ")
+				+ waysToReachStair(n - 3, asf + 3 + " ");
 	}
 
 	// 81.Count ways to reach the nth stair using step 1, 2 or 3 tabulated
@@ -856,6 +903,24 @@ public class GFG_DP {
 	}
 
 	// 86.Counts paths from a point to reach Origin tabulated
+	private static int pathsFromOriginTabulated(int n, int m) {
+		int[][] array = new int[n + 1][m + 1];
+		for (int i = array.length - 1; i >= 0; i--) {
+			for (int j = array[0].length - 1; j >= 0; j--) {
+				if (i == array.length - 1 && j == array[0].length - 1) {
+					array[i][j] = 1;
+				} else if (i == array.length - 1) {
+					array[i][j] = array[i][j + 1];
+				} else if (j == array[0].length - 1) {
+					array[i][j] = array[i + 1][j];
+				} else {
+					array[i][j] = array[i + 1][j] + array[i][j + 1];
+				}
+			}
+		}
+		return array[0][0];
+	}
+
 	// 87.Count number of ways to cover a distance recursive
 	private static int waysToCoverADistance(int n) {
 		if (n == 0) {
@@ -1609,37 +1674,39 @@ public class GFG_DP {
 		// return arr.length-LIS(arr);
 	}
 
-	private static int MinimumJumpsToReachLastBuildingInAMatrix(int[][] matrix, int i, int j, String asf) {
-		if (i == matrix.length - 1 && j == matrix[0].length - 1) {
-			System.out.println(asf);
-			return matrix[i][j];
-		}
-		if (i >= matrix.length || j >= matrix[0].length) {
-			return 0;
-
-		}
-		int left = Math.abs(
-				matrix[i][j] - MinimumJumpsToReachLastBuildingInAMatrix(matrix, i, j + 1, asf + matrix[i][j] + " "));
-		int down = Math.abs(
-				matrix[i][j] - MinimumJumpsToReachLastBuildingInAMatrix(matrix, i + 1, j, asf + matrix[i][j] + " "));
-		int diagonal = Math.abs(matrix[i][j]
-				- MinimumJumpsToReachLastBuildingInAMatrix(matrix, i + 1, j + 1, asf + matrix[i][j] + " "));
-
-		return Math.min(
-				Math.abs(matrix[i][j]
-						- MinimumJumpsToReachLastBuildingInAMatrix(matrix, i + 1, j, asf + matrix[i][j] + " ")),
-				Math.min(
-						Math.abs(matrix[i][j]
-								- MinimumJumpsToReachLastBuildingInAMatrix(matrix, i, j + 1, asf + matrix[i][j] + " ")),
-						Math.abs(matrix[i][j] - MinimumJumpsToReachLastBuildingInAMatrix(matrix, i + 1, j + 1,
-								asf + matrix[i][j] + " "))));
-	}
 	// 141.Find length of longest subsequence of one string which is substring
 	// of another string
-
 	// f(i + 1, j) = max(f(i + 1, j), f(i, j)) //skip this character in X
 	// if X[i] == Y[j] //add this character to current answer
 	// f(i + 1, j + 1) = max(f(i + 1, j + 1), f(i, j) + 1)
+
+	// 142.Find longest bitonic sequence such that increasing and decreasing
+	// parts are from two different arrays
+	private void LongestBitonicSequenceFormDiffArrays(int[] a, int[] b) {
+		// find the largest from both the arrays then combine them
+	}
+
+	// 161.Longest Increasing Path in Matrix
+	// NOT DONE
+	private static int LongestIncreasingPathInMatrix(int i, int j, int[][] matrix, String asf) {
+		if (i == matrix.length - 1 && j == matrix[0].length - 1) {
+			System.out.println(asf);
+			return 1;
+		}
+		if (i >= matrix.length || j >= matrix[0].length) {
+			return 0;
+		}
+		if (matrix[i + 1][j] > matrix[i][j] && i <= matrix.length - 1 && j <= matrix[0].length - 1) {
+			return 1 + LongestIncreasingPathInMatrix(i + 1, j, matrix, asf + matrix[i][j]);
+		}
+		if (matrix[i][j + 1] > matrix[i][j] && i <= matrix.length - 1 && j <= matrix[0].length - 1) {
+			return 1 + LongestIncreasingPathInMatrix(i, j + 1, matrix, asf + matrix[i][j]);
+		} else {
+			return 0;
+		}
+	}
+
+	// 169.Number of ways to form a heap with n distinct integers
 
 	// 179.Partition a set into two subsets such that the difference of subset
 	// sums is minimum
