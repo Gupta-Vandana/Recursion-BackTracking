@@ -1666,9 +1666,11 @@ public class GFG_DP {
 
 	// 115.Minimum number of deletions to make a string palindrome
 	// SAME AS ABOVE
+	
 	// 116.Minimum number of deletions to make a string palindrome | Set 2
 	// 117.Minimum jumps to reach last building in a matrix
 	// NOT DONE
+	
 	// 119.Minimum number of deletions to make a sorted sequence
 	private void MinimumNumberOfDeletionsToMakeASortedSequence(int[] arr) {
 		// return arr.length-LIS(arr);
